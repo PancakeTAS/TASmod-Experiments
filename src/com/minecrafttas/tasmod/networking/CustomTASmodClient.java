@@ -2,8 +2,6 @@ package com.minecrafttas.tasmod.networking;
 
 import com.minecrafttas.tasmod.exceptions.ClientAlreadyRunningException;
 
-import scala.reflect.internal.Trees.If;
-
 /**
  * The TASmod itself has a custom connection running next to the minecraft one. 
  * It's necessary since the integrated packet connection is tick-based and therefore cannot communicate inbetween ticks.
