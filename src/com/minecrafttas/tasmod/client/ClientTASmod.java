@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -53,7 +54,7 @@ public class ClientTASmod extends CommonTASmod {
 	 * This will launch the custom TASmod client on a separate thread.
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * This is a forge event called after the client is loaded, but before it launches
+	 * This is a forge event called after the client is connected to the server
 	 * 
 	 * @param e Connected to the server event
 	 */
@@ -70,6 +71,23 @@ public class ClientTASmod extends CommonTASmod {
 			TASmod.LOGGER.warn("Exception thrown trying to launch the custom TASmod client!");
 			TASmod.LOGGER.warn(exception);
 		}
+	}
+	
+	/**
+	 * Uninitialize the TASmod when disconnecting from a world.
+	 * This will kill the custom TASmod client on a separate thread.
+	 * 
+	 * IMPLEMENTATION NOTICE:
+	 * This is a forge event called after the client is disconnected from the server
+	 * 
+	 * @param e Disconnected to the server event
+	 */
+	@SubscribeEvent
+	public void onClientDisconnect(ClientDisconnectionFromServerEvent e) {
+		TASmod.LOGGER.debug("TASmod Disconnect Server Phase");
+		/* Kill the custom client thread */
+		CustomTASmodClient.killClient(); // this will kill the client if it is running
+		TASmod.LOGGER.debug("Killed the custom TASmod client");
 	}
 	
 	/**

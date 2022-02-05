@@ -1,9 +1,7 @@
 package com.minecrafttas.tasmod;
 
 import com.minecrafttas.tasmod.exceptions.ServerAlreadyRunningException;
-import com.minecrafttas.tasmod.networking.CustomTASmodClient;
 import com.minecrafttas.tasmod.networking.CustomTASmodServer;
-import com.minecrafttas.tasmod.networking.packets.ExampleTASmodPacket;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -74,6 +72,21 @@ public class CommonTASmod {
 	}
 	
 	/**
+	 * Uninitialize part of the TASmod after the server has stopped.
+	 * This will kill the custom TASmod server.
+	 * 
+	 * IMPLEMENTATION NOTICE:
+	 * Trace: net.minecraft.server.MinecraftServer.run()V at return
+	 * Mixin: com.minecrafttas.tasmod.mixin.events.HookMinecraftServer.hookRunEndEvent(CallbackInfo)V
+	 */
+	public void onServerStop() {
+		TASmod.LOGGER.debug("Common TASmod Server Stop Phase");
+		/* Kill the custom server thread */
+		CustomTASmodServer.killServer(); // this will kill the server if it is running
+		TASmod.LOGGER.debug("Killed the custom TASmod server");
+	}
+	
+	/**
 	 * Updates the TASmod at the start of a tick
 	 * 
 	 * IMPLEMENTATION NOTICE:
@@ -83,8 +96,6 @@ public class CommonTASmod {
 	 */
 	public void onServerTick(MinecraftServer mcserver) {
 		TASmod.LOGGER.debug("Server Tick");
-		// Test the custom server
-		CustomTASmodClient.sendPacket(new ExampleTASmodPacket());
 	}
 	
 }

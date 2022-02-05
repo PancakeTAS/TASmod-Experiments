@@ -39,4 +39,13 @@ public class HookMinecraftServer {
 		CommonTASmod.instance.onServerLaunch();
 	}
 	
+	/**
+	 * Triggers an Event in {@link CommonTASmod#onServerStop()} once the server shuts down
+	 * @param ci Callback Info
+	 */
+	@Inject(method = "run", at = @At("RETURN"))
+	public void hookRunEndEvent(CallbackInfo ci) {
+		CommonTASmod.instance.onServerStop();
+	}
+	
 }

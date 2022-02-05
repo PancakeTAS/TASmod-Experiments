@@ -78,5 +78,13 @@ public class CustomTASmodClient {
 		if (isRunning)
 			throw new ClientAlreadyRunningException();
 	}
+
+	/**
+	 * Kills the custom TASmod client if is running
+	 */
+	public static void killClient() {
+		if (CustomTASmodClient.instance != null)
+			CustomTASmodClient.instance.interrupt();
+	}
 	
 }
