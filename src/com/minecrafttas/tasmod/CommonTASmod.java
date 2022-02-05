@@ -50,11 +50,12 @@ public class CommonTASmod {
 	}
 	
 	/**
-	 * Initialize the TASmod on the launching integrated or dedicated server.
+	 * Initialize the TASmod on the integrated or dedicated server, that is about to launch.
 	 * This will launch the custom TASmod server on a separate thread.
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * net.minecraft.server.MinecraftServer.run()V
+	 * Trace: net.minecraft.server.MinecraftServer.run()V
+	 * Mixin: com.minecrafttas.tasmod.mixin.events.HookMinecraftServer.hookRunEvent(CallbackInfo)V
 	 */
 	public void onServerLaunch() {
 		TASmod.LOGGER.debug("Common TASmod Server Launch Phase");
@@ -74,8 +75,8 @@ public class CommonTASmod {
 	 * Updates the TASmod at the start of a tick
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * net.minecraft.server.MinecraftServer.run()V at net.minecraft.server.MinecraftServer.tick()V
-	 * 
+	 * Trace: net.minecraft.server.MinecraftServer.run()V at net.minecraft.server.MinecraftServer.tick()V
+	 * Mixin: Mixin: com.minecrafttas.tasmod.mixin.events.HookMinecraftServer.hookRunTickEvent(CallbackInfo)V
 	 * @param mcserver Instance of Minecraft Server
 	 */
 	public void onServerTick(MinecraftServer mcserver) {

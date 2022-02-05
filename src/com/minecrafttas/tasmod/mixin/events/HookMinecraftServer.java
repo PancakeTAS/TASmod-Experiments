@@ -31,7 +31,7 @@ public class HookMinecraftServer {
 	}
 	
 	/**
-	 * Triggers an Event in {@link CommonTASmod#onServerTick(Minecraft)} once the server starts
+	 * Triggers an Event in {@link CommonTASmod#onServerLaunch()} once the server starts
 	 * @param ci Callback Info
 	 */
 	@Inject(method = "run", at = @At("HEAD"))
