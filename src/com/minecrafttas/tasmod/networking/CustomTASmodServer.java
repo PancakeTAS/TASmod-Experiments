@@ -50,8 +50,8 @@ public class CustomTASmodServer {
 	public static void createServer() throws ServerAlreadyRunningException {
 		boolean isRunning = CustomTASmodServer.instance == null ? false : CustomTASmodServer.instance.isAlive();
 		// Cancel the currently running server
-		if (isRunning)
-			CustomTASmodServer.instance.interrupt();
+//		if (isRunning)
+//			CustomTASmodServer.instance.interrupt();
 		
 		// Clear the list of packets to send
 		CustomTASmodServer.packetsToSend = new LinkedBlockingQueue<>();
@@ -89,6 +89,14 @@ public class CustomTASmodServer {
 		// Make sure to throw an exception if the server was running
 		if (isRunning)
 			throw new ServerAlreadyRunningException();
+	}
+	
+	/**
+	 * Kills the custom TASmod server if is running
+	 */
+	public static void killServer() {
+		if (CustomTASmodServer.instance != null)
+			CustomTASmodServer.instance.interrupt();
 	}
 	
 }
