@@ -18,7 +18,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ClientTASmod extends CommonTASmod {
 
 	// Clientside TASmod singleton
-	public static ClientTASmod instance = new ClientTASmod();
+	public static ClientTASmod instance;
+	
+	/**
+	 * Prepares the singleton when the SidedProxy annotation in com.minecrafttas.tasmod.TASmod creates an instance of this object
+	 */
+	public ClientTASmod() {
+		ClientTASmod.instance = this;
+		TASmod.LOGGER.debug("ClientTASmod singleton ready");
+	}
 	
 	/**
 	 * Pre-Initialize the TASmod clientside

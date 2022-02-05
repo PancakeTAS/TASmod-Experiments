@@ -12,7 +12,15 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class CommonTASmod {
 
 	// TASmod singleton
-	public static CommonTASmod instance = new CommonTASmod();
+	public static CommonTASmod instance;
+	
+	/**
+	 * Prepares the singleton when the SidedProxy annotation in com.minecrafttas.tasmod.TASmod creates an instance of this object
+	 */
+	public CommonTASmod() {
+		CommonTASmod.instance = this;
+		TASmod.LOGGER.debug("CommonTASmod singleton ready");
+	}
 	
 	/**
 	 * Pre-Initialize the TASmod
