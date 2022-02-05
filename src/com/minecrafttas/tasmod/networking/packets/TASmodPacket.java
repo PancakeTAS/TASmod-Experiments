@@ -9,7 +9,7 @@ import net.minecraft.network.PacketBuffer;
  * There are no clientbound or serverbound packets as they were deemed unnecessary. This means both the server and the client can transmit any packet.
  * @author Pancake
  */
-public interface CustomTASmodPacket {
+public interface TASmodPacket {
 
 	/**
 	 * Once a packet is being received it is immediately handled in this method.
@@ -21,9 +21,10 @@ public interface CustomTASmodPacket {
 	
 	/**
 	 * In order to transfer packets over the network connection they need to be serialized into a stream of bytes.
+	 * @param buf Packet buffer to serialize to
 	 * @return A serializable packet buffer
 	 */
-	public PacketBuffer serialize();
+	public PacketBuffer serialize(PacketBuffer buf);
 	
 	/**
 	 * In order to receive packets over the network connection the other end serializes the packet into a stream of bytes. Therefore this end needs to deserialize the packet
