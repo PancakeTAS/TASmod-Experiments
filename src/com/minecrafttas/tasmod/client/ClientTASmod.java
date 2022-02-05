@@ -90,6 +90,8 @@ public class ClientTASmod extends CommonTASmod {
 	 */
 	public void onClientTick(Minecraft mc) {
 		TASmod.LOGGER.debug("Client Tick");
+		// Test the custom server
+		// currently testing the other side... CustomTASmodClient.sendPacket(new ExampleTASmodPacket());
 	}
 	
 }

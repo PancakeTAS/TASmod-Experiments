@@ -1,7 +1,9 @@
 package com.minecrafttas.tasmod;
 
 import com.minecrafttas.tasmod.exceptions.ServerAlreadyRunningException;
+import com.minecrafttas.tasmod.networking.CustomTASmodClient;
 import com.minecrafttas.tasmod.networking.CustomTASmodServer;
+import com.minecrafttas.tasmod.networking.packets.ExampleTASmodPacket;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -89,6 +91,8 @@ public class CommonTASmod {
 	 */
 	public void onServerTick(MinecraftServer mcserver) {
 		TASmod.LOGGER.debug("Server Tick");
+		// Test the custom server
+		CustomTASmodClient.sendPacket(new ExampleTASmodPacket());
 	}
 	
 }
