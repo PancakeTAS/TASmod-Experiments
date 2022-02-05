@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class TASmod {
 	
 	// TASmod Logger for printing debug lines into the console.
-	public static final Logger LOGGER = LogManager.getLogger("tasmod");
+	public static final Logger LOGGER = LogManager.getLogger("TASmod");
 	
 	/**
 	 * This proxy is used once for the preinitialization and initialization events.

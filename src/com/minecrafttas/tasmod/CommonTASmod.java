@@ -24,7 +24,7 @@ public class CommonTASmod {
 	 */
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent e) {
-		TASmod.LOGGER.info("Common TASmod Init Phase");
+		TASmod.LOGGER.debug("Common TASmod Init Phase");
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class CommonTASmod {
 	 */
 	@EventHandler
 	public void onInit(FMLInitializationEvent e) {
-		TASmod.LOGGER.info("Common TASmod Init Phase");
+		TASmod.LOGGER.debug("Common TASmod Init Phase");
 	}
 	
 	/**
@@ -49,7 +49,7 @@ public class CommonTASmod {
 	 * @param mcserver Instance of Minecraft Server
 	 */
 	public void onServerTick(MinecraftServer mcserver) {
-		TASmod.LOGGER.info("Server Tick");
+		TASmod.LOGGER.debug("TASmod Server Tick Handle");
 	}
 	
 }

@@ -25,7 +25,7 @@ public class ClientTASmod extends CommonTASmod {
 	 */
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent e) {
-		TASmod.LOGGER.info("Client TASmod Preinit Phase");
+		TASmod.LOGGER.debug("Client TASmod Preinit Phase");
 		super.onPreInit(e);
 	}
 	
@@ -34,7 +34,7 @@ public class ClientTASmod extends CommonTASmod {
 	 */
 	@EventHandler
 	public void onInit(FMLInitializationEvent e) {
-		TASmod.LOGGER.info("Client TASmod Init Phase");
+		TASmod.LOGGER.debug("Client TASmod Init Phase");
 		super.onInit(e);
 	}
 
@@ -47,7 +47,7 @@ public class ClientTASmod extends CommonTASmod {
 	 * @param mc Instance of Minecraft
 	 */
 	public void onClientTick(Minecraft mc) {
-		TASmod.LOGGER.info("Client Tick");
+		TASmod.LOGGER.debug("Client Tick");
 	}
 	
 }
