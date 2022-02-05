@@ -18,7 +18,7 @@ import net.minecraft.server.MinecraftServer;
 public class HookMinecraftServer {
 
 	/**
-	 * Triggers an Event in {@link CommonTASmod#onServerTick(Minecraft)} before every tick
+	 * Triggers an Event in {@link CommonTASmod#onServerTick(MinecraftServer)} before every tick
 	 * 
 	 * IMPLEMENTATION NOTICE:
 	 * The run() method is the run method for the entire server. This mixin catches when tick() is called and then triggers an event. It is very important
@@ -28,6 +28,15 @@ public class HookMinecraftServer {
 	@Inject(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/MinecraftServer;tick()V"))
 	public void hookRunTickEvent(CallbackInfo ci) {
 		CommonTASmod.instance.onServerTick((MinecraftServer) (Object) this);
+	}
+	
+	/**
+	 * Triggers an Event in {@link CommonTASmod#onServerTick(Minecraft)} once the server starts
+	 * @param ci Callback Info
+	 */
+	@Inject(method = "run", at = @At("HEAD"))
+	public void hookRunEvent(CallbackInfo ci) {
+		CommonTASmod.instance.onServerLaunch();
 	}
 	
 }
