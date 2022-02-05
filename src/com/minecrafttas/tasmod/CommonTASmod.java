@@ -84,7 +84,7 @@ public class CommonTASmod {
 	 * 
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.server.MinecraftServer.run()V at net.minecraft.server.MinecraftServer.tick()V
-	 * Mixin: Mixin: com.minecrafttas.tasmod.mixin.events.HookMinecraftServer.hookRunTickEvent(CallbackInfo)V
+	 * Mixin: com.minecrafttas.tasmod.mixin.events.HookMinecraftServer.hookRunTickEvent(CallbackInfo)V
 	 * @param mcserver Instance of Minecraft Server
 	 */
 	public void onServerTick(MinecraftServer mcserver) {
