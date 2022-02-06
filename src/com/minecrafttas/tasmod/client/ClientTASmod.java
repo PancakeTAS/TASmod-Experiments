@@ -1,9 +1,12 @@
 package com.minecrafttas.tasmod.client;
 
+import java.io.IOException;
+
 import com.minecrafttas.tasmod.CommonTASmod;
 import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.exceptions.ClientAlreadyRunningException;
 import com.minecrafttas.tasmod.networking.CustomTASmodClient;
+import com.minecrafttas.tasmod.networking.CustomTASmodServer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
@@ -68,8 +71,9 @@ public class ClientTASmod extends CommonTASmod {
 			TASmod.LOGGER.debug("Successfully created the custom tasmod client without any unexpected issues");
 		} catch (ClientAlreadyRunningException exception) {
 			// Note: The loglevel is only 'warn', since this exception is not fatal and the client was still started.
-			TASmod.LOGGER.warn("Exception thrown trying to launch the custom TASmod client!");
-			TASmod.LOGGER.warn(exception);
+			TASmod.LOGGER.warn("Exception thrown trying to launch the custom TASmod client! {}", exception);
+		} catch (IOException exception) {
+			TASmod.LOGGER.fatal("Exception thrown trying to kill the previous custom TASmod client! {}", exception);
 		}
 	}
 	
@@ -86,8 +90,14 @@ public class ClientTASmod extends CommonTASmod {
 	public void onClientDisconnect(ClientDisconnectionFromServerEvent e) {
 		TASmod.LOGGER.debug("TASmod Disconnect Server Phase");
 		/* Kill the custom client thread */
-		CustomTASmodClient.killClient(); // this will kill the client if it is running
-		TASmod.LOGGER.debug("Killed the custom TASmod client");
+		try {
+			TASmod.LOGGER.debug("Trying to kill the custom tasmod client");
+			CustomTASmodClient.killClient(); // this will kill the client if it is running
+			TASmod.LOGGER.debug("Successfully killed the custom tasmod client without any unexpected issues");
+		} catch (IOException exception) {
+			TASmod.LOGGER.error("Exception thrown trying to kill the custom TASmod client!");
+			TASmod.LOGGER.error(exception);
+		}
 	}
 	
 	/**

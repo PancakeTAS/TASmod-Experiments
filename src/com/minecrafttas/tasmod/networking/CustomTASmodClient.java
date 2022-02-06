@@ -1,7 +1,10 @@
 package com.minecrafttas.tasmod.networking;
 
 import java.io.EOFException;
+import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -23,9 +26,13 @@ public class CustomTASmodClient {
 
 	/**
 	 * This is the thread that runs the client. It will exit once the client has disconnected.
-	 * Interrupting it will always close the connection and end the thread.
 	 */
 	private static Thread instance;
+	
+	/**
+	 * This is the client socket. Interrupting it will always close the connection and end the thread (instance).
+	 */
+	private static Socket clientSocket;
 	
 	/**
 	 * This queue of packets is going to be sent by another thread.
@@ -50,13 +57,14 @@ public class CustomTASmodClient {
 	 * IMPLEMENTATION NOTICE:
 	 * Called from ClientTASmod.
 	 * 
+	 * @throws IOException Fatal Exception, the socket couldn't be closed
 	 * @throws If the last client wasn't succesfully shut down it will throw an exception and forcefully shut down the client
 	 */
-	public static void createClient() throws ClientAlreadyRunningException {
+	public static void createClient() throws ClientAlreadyRunningException, IOException {
 		boolean isRunning = CustomTASmodClient.instance == null ? false : CustomTASmodClient.instance.isAlive();
 		// Cancel the currently running server
 		if (isRunning)
-			CustomTASmodClient.instance.interrupt();
+			CustomTASmodClient.clientSocket.close();
 		
 		// Clear the list of packets to send
 		CustomTASmodClient.packetsToSend = new LinkedBlockingQueue<>();
@@ -66,13 +74,14 @@ public class CustomTASmodClient {
 			String serverIp = Minecraft.getMinecraft().isIntegratedServerRunning() ? "127.0.0.1" : Minecraft.getMinecraft().getCurrentServerData().serverIP;
 			// Connect to the server
 			try(Socket clientSocket = new Socket(serverIp, 3111)) {
+				CustomTASmodClient.clientSocket = clientSocket;
 				// Handle the socket
 				CustomTASmodCommon.handleSocket(clientSocket, CustomTASmodClient.packetsToSend); // this will create a new thread for outstream and use the current thread for instream
-			} catch (EOFException exception) {
+			} catch (EOFException  | SocketException | InterruptedIOException exception) {
 				// The custom TASmod client was closed and the end of stream was reached. The socket was shut down properly.
 				TASmod.LOGGER.debug("Custom TASmod client was shutdown");
 			} catch (Exception exception) {
-				TASmod.LOGGER.fatal("Custom TASmod client was unexpectedly shutdown", exception);
+				TASmod.LOGGER.error("Custom TASmod client was unexpectedly shutdown {}", exception);
 			}
 		});
 		CustomTASmodClient.instance.setDaemon(true); // If daemon is set, the jvm will quit without waiting for this thread to finish
@@ -85,10 +94,11 @@ public class CustomTASmodClient {
 
 	/**
 	 * Kills the custom TASmod client if is running
+	 * @throws IOException Thrown if the socket couldn't be closed
 	 */
-	public static void killClient() {
+	public static void killClient() throws IOException {
 		if (CustomTASmodClient.instance != null)
-			CustomTASmodClient.instance.interrupt();
+			CustomTASmodClient.clientSocket.close();
 	}
 	
 }
