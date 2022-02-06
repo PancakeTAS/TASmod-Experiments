@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.regex.Pattern;
 
 import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.exceptions.ClientAlreadyRunningException;
@@ -72,6 +73,8 @@ public class Client {
 		Client.instance = new Thread(() -> {
 			// Find the address of the server we are currently connected to (in minecraft's connection)
 			String serverIp = Minecraft.getMinecraft().isIntegratedServerRunning() ? "127.0.0.1" : Minecraft.getMinecraft().getCurrentServerData().serverIP;
+			if (serverIp.contains(":"))
+				serverIp = serverIp.split(Pattern.quote(":"))[0];
 			// Connect to the server
 			try(Socket clientSocket = new Socket(serverIp, 3111)) {
 				Client.clientSocket = clientSocket;
