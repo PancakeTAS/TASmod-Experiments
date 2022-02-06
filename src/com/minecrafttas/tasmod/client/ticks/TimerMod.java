@@ -21,8 +21,9 @@ public class TimerMod extends Timer {
 	
 	static AtomicBoolean shouldTick = new AtomicBoolean(true);
 	
-	// Profiling
+	// Required variables for fixing interpolation
 	private long millisSinceEnable;
+	private long lastMs;
 	private float ticksSinceEnable;
 	
 	/**
@@ -33,15 +34,22 @@ public class TimerMod extends Timer {
 		if (Minecraft.getMinecraft().getConnection() != null) {
 			((AccessTimer) this).setLastSyncSysClock(Minecraft.getSystemTime()); // update the timer so that after returning to scheduling the client won't catch up all ticks (max 10)
 			this.elapsedTicks = 0; // do not do any ticks
+			long newMs = System.currentTimeMillis();
 			if (TimerMod.shouldTick.compareAndSet(true, false)) {
 				this.elapsedTicks++;
 				this.ticksSinceEnable++;
-				TASmod.LOGGER.debug(String.format("Average Tickrate: %.2f", 1000.0f / ((System.currentTimeMillis()-this.millisSinceEnable) / this.ticksSinceEnable)));
+				TASmod.LOGGER.debug(String.format("Average Tickrate: %.2f", 1000.0f / ((Minecraft.getSystemTime()-this.millisSinceEnable) / this.ticksSinceEnable)));
 			}
+			// Interpolating
+			this.elapsedPartialTicks = (float) (newMs - this.lastMs) / 50.0f;
+			this.renderPartialTicks += this.elapsedPartialTicks;
+			this.renderPartialTicks -= (int) this.renderPartialTicks;
+			this.lastMs = newMs;
 			return;
 		}
-		this.millisSinceEnable = System.currentTimeMillis();
+		this.millisSinceEnable = Minecraft.getSystemTime();
 		this.ticksSinceEnable = 0;
+		this.lastMs = Minecraft.getSystemTime();
 		TimerMod.shouldTick.set(true); // The client should always tick if it once thrown out of the vanilla scheduling part, to make the server tick, etc.
 		super.updateTimer();
 	}
