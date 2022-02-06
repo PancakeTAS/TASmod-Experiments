@@ -2,6 +2,7 @@ package com.minecrafttas.tasmod.client.ticks;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.mixin.client.accessor.AccessMinecraft;
 import com.minecrafttas.tasmod.mixin.client.accessor.AccessTimer;
 
@@ -20,6 +21,10 @@ public class TimerMod extends Timer {
 	
 	static AtomicBoolean shouldTick = new AtomicBoolean(true);
 	
+	// Profiling
+	private long millisSinceEnable;
+	private float ticksSinceEnable;
+	
 	/**
 	 * Disable scheduling if the client is connected to a server by not calling the original method
 	 */
@@ -28,11 +33,16 @@ public class TimerMod extends Timer {
 		if (Minecraft.getMinecraft().getConnection() != null) {
 			((AccessTimer) this).setLastSyncSysClock(Minecraft.getSystemTime()); // update the timer so that after returning to scheduling the client won't catch up all ticks (max 10)
 			this.elapsedTicks = 0; // do not do any ticks
-			if (TimerMod.shouldTick.compareAndSet(true, false))
+			if (TimerMod.shouldTick.compareAndSet(true, false)) {
 				this.elapsedTicks++;
+				this.ticksSinceEnable++;
+				TASmod.LOGGER.debug(String.format("Average Tickrate: %.2f", 1000.0f / ((System.currentTimeMillis()-this.millisSinceEnable) / this.ticksSinceEnable)));
+			}
 			return;
 		}
-		shouldTick.set(true); // The client should always tick if it once thrown out of the vanilla scheduling part, to make the server tick, etc.
+		this.millisSinceEnable = System.currentTimeMillis();
+		this.ticksSinceEnable = 0;
+		TimerMod.shouldTick.set(true); // The client should always tick if it once thrown out of the vanilla scheduling part, to make the server tick, etc.
 		super.updateTimer();
 	}
 	
