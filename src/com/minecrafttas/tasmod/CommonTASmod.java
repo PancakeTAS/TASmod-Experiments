@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.minecrafttas.tasmod.exceptions.ServerAlreadyRunningException;
 import com.minecrafttas.tasmod.networking.Server;
+import com.minecrafttas.tasmod.ticks.TickSyncServer;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -67,7 +68,7 @@ public class CommonTASmod {
 	 * Trace: net.minecraft.server.MinecraftServer.run()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.events.HookMinecraftServer.hookRunEvent(CallbackInfo)V
 	 */
-	public void onServerLaunch() {
+	public static /* why forge */ void onServerLaunch() {
 		TASmod.LOGGER.debug("Common TASmod Server Launch Phase");
 		/* Launch the custom server thread */
 		try {
@@ -107,12 +108,28 @@ public class CommonTASmod {
 	 * Updates the TASmod at the start of a tick
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * Trace: net.minecraft.server.MinecraftServer.run()V at net.minecraft.server.MinecraftServer.tick()V
-	 * Mixin: com.minecrafttas.tasmod.mixin.events.HookMinecraftServer.hookRunTickEvent(CallbackInfo)V
+	 * Trace: net.minecraft.server.MinecraftServer.run()V at custom net.minecraft.server.MinecraftServer.tick()V
+	 * Mixin: com.minecrafttas.tasmod.mixin.MixinMinecraftServer.customTick()V
 	 * @param mcserver Instance of Minecraft Server
 	 */
 	public void onServerTick(MinecraftServer mcserver) {
 		TASmod.LOGGER.debug("Server Tick");
+	}
+
+	/**
+	 * Updates the TASmod at the end of a tick
+	 * 
+	 * IMPLEMENTATION NOTICE:
+	 * Trace: net.minecraft.server.MinecraftServer.run()V after custom net.minecraft.server.MinecraftServer.tick()V
+	 * Mixin: com.minecrafttas.tasmod.mixin.MixinMinecraftServer.customTick()V
+	 * @param mcserver Instance of Minecraft Server
+	 */
+	public void onServerPostTick(MinecraftServer mcserver) {
+		TASmod.LOGGER.debug("Server Post Tick");
+		/* Update tick sync */
+		TASmod.LOGGER.debug("Updating tick sync post tick");
+		TickSyncServer.serverPostTick();
+		TASmod.LOGGER.debug("Tick sync was updated post tick");
 	}
 	
 }

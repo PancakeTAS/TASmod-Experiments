@@ -4,9 +4,10 @@ import java.io.IOException;
 
 import com.minecrafttas.tasmod.CommonTASmod;
 import com.minecrafttas.tasmod.TASmod;
+import com.minecrafttas.tasmod.client.ticks.TickSyncClient;
+import com.minecrafttas.tasmod.client.ticks.TimerMod;
 import com.minecrafttas.tasmod.exceptions.ClientAlreadyRunningException;
 import com.minecrafttas.tasmod.networking.Client;
-import com.minecrafttas.tasmod.networking.Server;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
@@ -57,6 +58,10 @@ public class ClientTASmod extends CommonTASmod {
 		TASmod.LOGGER.debug("Registering the ClientTASmod to the event bus");
 		MinecraftForge.EVENT_BUS.register(this); // this will add the current class to the event bus from forge
 		TASmod.LOGGER.debug("ClientTASmod was registered to the event bus");
+		/* Install the client timer mod */
+		TASmod.LOGGER.debug("Installing the custom timer mod");
+		TimerMod.applyTimerMod();
+		TASmod.LOGGER.debug("Custom timer mod was installed");
 		super.onInit(e);
 	}
 
@@ -112,14 +117,30 @@ public class ClientTASmod extends CommonTASmod {
 	 * Updates the TASmod at the start of a client tick
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * net.minecraft.client.Minecraft.runTick()V
+	 * Trace: net.minecraft.client.Minecraft.runTick()V
+	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraft.runTickEvent(CallbackInfo)V
 	 * 
 	 * @param mc Instance of Minecraft
 	 */
 	public void onClientTick(Minecraft mc) {
 		TASmod.LOGGER.debug("Client Tick");
-		// Test the custom server
-		// currently testing the other side... CustomTASmodClient.sendPacket(new ExampleTASmodPacket());
+	}
+	
+	/**
+	 * Updates the TASmod at the end of a client tick
+	 * 
+	 * IMPLEMENTATION NOTICE:
+	 * Trace: net.minecraft.client.Minecraft.runTick()V at RETURN
+	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraft.runTickPostEvent(CallbackInfo)V
+	 * 
+	 * @param mc Instance of Minecraft
+	 */
+	public void onClientPostTick(Minecraft mc) {
+		TASmod.LOGGER.debug("Client Post Tick");
+		/* Update tick sync */
+		TASmod.LOGGER.debug("Updating tick sync post tick");
+		TickSyncClient.clientPostTick(mc);
+		TASmod.LOGGER.debug("Tick sync was updated post tick");
 	}
 	
 }
