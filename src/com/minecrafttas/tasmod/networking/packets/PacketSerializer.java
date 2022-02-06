@@ -9,7 +9,7 @@ import net.minecraft.network.PacketBuffer;
  * This class helps serializing and deserializing packets
  * @author Pancake
  */
-public class TASmodPacketSerializer {
+public class PacketSerializer {
 
 	/**
 	 * Deserialize a TASmod packet from a packet buffer. The packet class is prefixed with an id and read here.
@@ -17,13 +17,13 @@ public class TASmodPacketSerializer {
 	 * @param buf Serialized byte buffer with id prefix
 	 * @return Deserialized packet
 	 */
-	public static TASmodPacket deserialize(PacketBuffer buf) {
+	public static Packet deserialize(PacketBuffer buf) {
 		// Read packet id and deserialize the correct packet
 		int packetId = buf.readInt();
-		TASmodPacket packet = null;
+		Packet packet = null;
 		switch (packetId) {
 			case 0:
-				packet = new ExampleTASmodPacket();
+				packet = new ExamplePacket();
 				break;
 			default:
 				TASmod.LOGGER.warn("Unregistered packet received! Packet Id: " + packetId);
@@ -39,7 +39,7 @@ public class TASmodPacketSerializer {
 	 * @param packet Non-serialized packet
 	 * @return Serialized packet buffer with id prefix
 	 */
-	public static PacketBuffer serialize(TASmodPacket packet) {
+	public static PacketBuffer serialize(Packet packet) {
 		// Figure out packet class and prefix the correct id
 		String clazz = packet.getClass().getSimpleName();
 		PacketBuffer buf = new PacketBuffer(Unpooled.buffer());

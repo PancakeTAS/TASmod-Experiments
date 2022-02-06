@@ -3,7 +3,7 @@ package com.minecrafttas.tasmod;
 import java.io.IOException;
 
 import com.minecrafttas.tasmod.exceptions.ServerAlreadyRunningException;
-import com.minecrafttas.tasmod.networking.CustomTASmodServer;
+import com.minecrafttas.tasmod.networking.Server;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -64,7 +64,7 @@ public class CommonTASmod {
 		/* Launch the custom server thread */
 		try {
 			TASmod.LOGGER.debug("Trying to create the custom tasmod server");
-			CustomTASmodServer.createServer(); // this will create a new thread in which it launches the server. It also throws an exception if the last server wasn't successfully shut down.
+			Server.createServer(); // this will create a new thread in which it launches the server. It also throws an exception if the last server wasn't successfully shut down.
 			TASmod.LOGGER.debug("Successfully created the custom tasmod server without any unexpected issues");
 		} catch (ServerAlreadyRunningException exception) {
 			// Note: The loglevel is only 'warn', since this exception is not fatal and the server was still started.
@@ -87,7 +87,7 @@ public class CommonTASmod {
 		/* Kill the custom server thread */
 		try {
 			TASmod.LOGGER.debug("Trying to kill the custom tasmod server");
-			CustomTASmodServer.killServer(); // this will kill the server if it is running
+			Server.killServer(); // this will kill the server if it is running
 			TASmod.LOGGER.debug("Successfully killed the custom tasmod server without any unexpected issues");
 		} catch (IOException exception) {
 			TASmod.LOGGER.error("Exception thrown trying to kill the custom TASmod server!");

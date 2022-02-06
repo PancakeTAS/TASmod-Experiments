@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.exceptions.ServerAlreadyRunningException;
-import com.minecrafttas.tasmod.networking.packets.TASmodPacket;
+import com.minecrafttas.tasmod.networking.packets.Packet;
 
 /**
  * The TASmod itself has a custom connection running next to the minecraft one. 
@@ -21,7 +21,7 @@ import com.minecrafttas.tasmod.networking.packets.TASmodPacket;
  * The server creates a separate thread to run off so that it's non-blocking. Therefore it uses a queue for outgoing packets.
  * @author Pancake
  */
-public class CustomTASmodServer {
+public class Server {
 
 	/**
 	 * This is the thread that runs the server. It will exit once the server has disconnected.
@@ -37,18 +37,18 @@ public class CustomTASmodServer {
 	/**
 	 * This queue of packets is going to be sent by another thread.
 	 */
-	private static LinkedBlockingQueue<BlockingQueue<TASmodPacket>> packetsToSend = new LinkedBlockingQueue<>(); // Initialize with something so this cannot cause a npe
+	private static LinkedBlockingQueue<BlockingQueue<Packet>> packetsToSend = new LinkedBlockingQueue<>(); // Initialize with something so this cannot cause a npe
 	
 	/**
 	 * Adds a packet to the queue of packets to send to all clients
 	 * @param packet Packet to send
 	 */
-	public static void sendPacket(TASmodPacket packet) {
-		if (CustomTASmodServer.instance == null)
+	public static void sendPacket(Packet packet) {
+		if (Server.instance == null)
 			return;
-		if (!CustomTASmodServer.instance.isAlive())
+		if (!Server.instance.isAlive())
 			return;
-		CustomTASmodServer.packetsToSend.forEach(queue -> queue.add(packet));
+		Server.packetsToSend.forEach(queue -> queue.add(packet));
 	}
 	
 	/**
@@ -61,25 +61,25 @@ public class CustomTASmodServer {
 	 * @throws If the last server wasn't succesfully shut down it will throw an exception and forcefully shut down the server
 	 */
 	public static void createServer() throws ServerAlreadyRunningException, IOException {
-		boolean isRunning = CustomTASmodServer.instance == null ? false : CustomTASmodServer.instance.isAlive();
+		boolean isRunning = Server.instance == null ? false : Server.instance.isAlive();
 		// Cancel the currently running server
 		if (isRunning)
-			CustomTASmodServer.serverSocket.close();
+			Server.serverSocket.close();
 		
 		// Clear the list of packets to send
-		CustomTASmodServer.packetsToSend = new LinkedBlockingQueue<>();
+		Server.packetsToSend = new LinkedBlockingQueue<>();
 		// Start a server
-		CustomTASmodServer.instance = new Thread(() -> {
+		Server.instance = new Thread(() -> {
 			try(ServerSocket serverSocket = new ServerSocket(3111)) {
-				CustomTASmodServer.serverSocket = serverSocket;
+				Server.serverSocket = serverSocket;
 				// Wait until new clients are there and then handle them.
 				while (true) {
 					Socket clientSocket = serverSocket.accept();
-					final LinkedBlockingQueue<TASmodPacket> queue = new LinkedBlockingQueue<>();
+					final LinkedBlockingQueue<Packet> queue = new LinkedBlockingQueue<>();
 					packetsToSend.add(queue);
 					Thread handler = new Thread(() -> {
 						try {
-							CustomTASmodCommon.handleSocket(clientSocket, queue); // this will create a new thread for outstream and use the current thread for instream
+							CommonHandler.handleSocket(clientSocket, queue); // this will create a new thread for outstream and use the current thread for instream
 						} catch (EOFException exception) {
 							// The custom TASmod client connection was closed and the end of stream was reached. The socket was shut down properly.
 							TASmod.LOGGER.debug("Custom TASmod client connection was shutdown");
@@ -97,8 +97,8 @@ public class CustomTASmodServer {
 				TASmod.LOGGER.error("Custom TASmod server was unexpectedly shutdown {}", exception);
 			}
 		});
-		CustomTASmodServer.instance.setDaemon(true); // If daemon is set, the jvm will quit without waiting for this thread to finish
-		CustomTASmodServer.instance.start();
+		Server.instance.setDaemon(true); // If daemon is set, the jvm will quit without waiting for this thread to finish
+		Server.instance.start();
 		
 		// Make sure to throw an exception if the server was running
 		if (isRunning)
@@ -110,8 +110,8 @@ public class CustomTASmodServer {
 	 * @throws IOException Thrown if the socket couldn't be closed
 	 */
 	public static void killServer() throws IOException {
-		if (CustomTASmodServer.instance != null)
-			CustomTASmodServer.serverSocket.close();
+		if (Server.instance != null)
+			Server.serverSocket.close();
 	}
 	
 }

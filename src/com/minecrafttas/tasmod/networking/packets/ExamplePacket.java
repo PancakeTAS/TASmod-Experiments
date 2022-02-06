@@ -8,7 +8,7 @@ import net.minecraft.network.PacketBuffer;
  * This is an example packet created in order to test the custom TASmod server and client.
  * @author Pancake
  */
-public class ExampleTASmodPacket implements TASmodPacket {
+public class ExamplePacket implements Packet {
 
 	@Override
 	public void handle() {
