@@ -28,4 +28,13 @@ public class HookMinecraft {
 		ClientTASmod.instance.onClientTick((Minecraft) (Object) this);
 	}
 	
+	/**
+	 * Triggers an Event in {@link ClientTASmod#onClientPostTick(Minecraft)} after every tick
+	 * @param ci Callback Info
+	 */
+	@Inject(method = "runTick", at = @At("RETURN"))
+	public void hookRunTickPostEvent(CallbackInfo ci) {
+		ClientTASmod.instance.onClientPostTick((Minecraft) (Object) this);
+	}
+	
 }
