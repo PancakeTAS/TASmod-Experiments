@@ -36,7 +36,11 @@ public class CustomTASmodServer {
 	 * @param packet Packet to send
 	 */
 	public static void sendPacket(TASmodPacket packet) {
-		packetsToSend.forEach(queue -> queue.add(packet));
+		if (CustomTASmodServer.instance == null)
+			return;
+		if (!CustomTASmodServer.instance.isAlive())
+			return;
+		CustomTASmodServer.packetsToSend.forEach(queue -> queue.add(packet));
 	}
 	
 	/**

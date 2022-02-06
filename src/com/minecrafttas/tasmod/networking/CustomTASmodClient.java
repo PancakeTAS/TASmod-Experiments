@@ -37,6 +37,10 @@ public class CustomTASmodClient {
 	 * @param packet Packet to send
 	 */
 	public static void sendPacket(TASmodPacket packet) {
+		if (CustomTASmodClient.instance == null)
+			return;
+		if (!CustomTASmodClient.instance.isAlive())
+			return;
 		CustomTASmodClient.packetsToSend.add(packet);
 	}
 	
