@@ -9,7 +9,7 @@ import net.minecraft.network.PacketBuffer;
  * There are no clientbound or serverbound packets as they were deemed unnecessary. This means both the server and the client can transmit any packet.
  * @author Pancake
  */
-public interface TASmodPacket {
+public interface Packet {
 
 	/**
 	 * Once a packet is being received it is immediately handled in this method.
