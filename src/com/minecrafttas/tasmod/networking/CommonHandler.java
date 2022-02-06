@@ -1,5 +1,7 @@
 package com.minecrafttas.tasmod.networking;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
@@ -25,9 +27,10 @@ public class CommonHandler {
 	 * @throws Exception Unexpected issues
 	 */
 	public static void handleSocket(Socket clientSocket, BlockingQueue<Packet> packetsToSend) throws Exception {
+		clientSocket.setTcpNoDelay(true);
 		// Prepare the in and out streams.
-		DataInputStream inputStream = new DataInputStream(clientSocket.getInputStream());
-		DataOutputStream outputStream = new DataOutputStream(clientSocket.getOutputStream());
+		DataInputStream inputStream = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
+		DataOutputStream outputStream = new DataOutputStream(new BufferedOutputStream(clientSocket.getOutputStream()));
 		// Create a new thread that writes packets if available
 		Thread outputThread = new Thread(() -> {
 			try {
@@ -36,13 +39,14 @@ public class CommonHandler {
 					// Try to poll another packet that wants to be sent
 					packet = packetsToSend.poll();
 					if (packet == null) {
-						Thread.sleep(10); // If nothing has to be done, let the cpu rest by waiting
+						Thread.sleep(1); // If nothing has to be done, let the cpu rest by waiting
 						continue;
 					}
 					// A packet was found: Serialize then send it.
 					byte[] packetData = PacketSerializer.serialize(packet).array();
 					outputStream.writeInt(packetData.length);
 					outputStream.write(packetData);
+					outputStream.flush();
 					TASmod.LOGGER.debug("Sent a " + packet.getClass().getSimpleName() + " to the socket.");
 				}
 			} catch (Exception exception) {
