@@ -13,6 +13,7 @@ import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketBuffer;
 
 /**
+ * This handler processes input packets and sends output packets to a given socket. It's common code meaning it works on both the server and client side.
  * @author Pancake
  */
 public class CommonHandler {
