@@ -26,10 +26,10 @@ public class PacketSerializer {
 				packet = new ExamplePacket();
 				break;
 			case 1:
-				packet = new ClientTickPacket(null, -1);
+				packet = new ClientTickPacket();
 				break;
 			case 2:
-				packet = new ServerTickPacket(null, -1);
+				packet = new ServerTickPacket(null);
 				break;
 			default:
 				TASmod.LOGGER.warn("Unregistered packet received! Packet Id: " + packetId);

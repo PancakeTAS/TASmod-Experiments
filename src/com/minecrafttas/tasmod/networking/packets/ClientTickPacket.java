@@ -13,11 +13,11 @@ import com.minecrafttas.tasmod.client.ticks.TickSyncClient;
  * @author Pancake
  */
 public class ClientTickPacket extends ServerTickPacket {
-	public ClientTickPacket(UUID uuid, int tick) { super(uuid, tick); }
+	public ClientTickPacket() { super(UUID.randomUUID()); }
 
 	@Override
 	public void handle() {
-		TickSyncClient.onPacket(uuid, tick);
+		TickSyncClient.onPacket();
 	}
 
 }

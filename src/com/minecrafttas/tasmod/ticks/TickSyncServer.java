@@ -14,11 +14,6 @@ import com.minecrafttas.tasmod.networking.packets.ClientTickPacket;
  * @author Pancake
  */
 public class TickSyncServer {
-
-	/**
-	 * This is the tick the server is currently on.
-	 */
-	private static int tick;
 	
 	/**
 	 * A multithreadable boolean that tells the MixinMinecraftServer to tick the server or not.
@@ -33,11 +28,8 @@ public class TickSyncServer {
 	 * @param uuid Player UUID
 	 * @param tick Current tick of the player
 	 */
-	public static void onPacket(UUID uuid, int tick) {
-//		if ((tick-1) != TickSyncServer.tick)
-//			return;
+	public static void onPacket(UUID uuid) {
 		shouldTick.set(true);
-		tick++;
 		
 		// TODO: Wait for all clients not just any
 	}
@@ -47,7 +39,7 @@ public class TickSyncServer {
 	 * to all clients making them tick
 	 */
 	public static void serverPostTick() {
-		Server.sendPacket(new ClientTickPacket(UUID.randomUUID(), TickSyncServer.tick));
+		Server.sendPacket(new ClientTickPacket());
 	}
 	
 }
