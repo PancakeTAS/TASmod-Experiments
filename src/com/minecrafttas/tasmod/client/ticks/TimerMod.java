@@ -2,7 +2,6 @@ package com.minecrafttas.tasmod.client.ticks;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.mixin.client.accessor.AccessMinecraft;
 import com.minecrafttas.tasmod.mixin.client.accessor.AccessTimer;
 
@@ -22,9 +21,9 @@ public class TimerMod extends Timer {
 	static AtomicBoolean shouldTick = new AtomicBoolean(true);
 	
 	// Required variables for fixing interpolation
-	private long millisSinceEnable;
 	private long lastMs;
-	private float ticksSinceEnable;
+	private long millisSinceTick;
+	private float lastTickLength;
 	
 	/**
 	 * Disable scheduling if the client is connected to a server by not calling the original method
@@ -37,18 +36,22 @@ public class TimerMod extends Timer {
 			long newMs = System.currentTimeMillis();
 			if (TimerMod.shouldTick.compareAndSet(true, false)) {
 				this.elapsedTicks++;
-				this.ticksSinceEnable++;
-				TASmod.LOGGER.debug(String.format("Average Tickrate: %.2f", 1000.0f / ((Minecraft.getSystemTime()-this.millisSinceEnable) / this.ticksSinceEnable)));
+				this.lastTickLength = newMs - this.millisSinceTick;
+				this.millisSinceTick = newMs;
+				this.renderPartialTicks = 0; // Reset after the tick
 			}
 			// Interpolating
-			this.elapsedPartialTicks = (float) (newMs - this.lastMs) / 50.0f;
-			this.renderPartialTicks += this.elapsedPartialTicks;
-			this.renderPartialTicks -= (int) this.renderPartialTicks;
+			this.elapsedPartialTicks = (float) (newMs - this.lastMs) / this.lastTickLength;
+			float newPartialTicks = this.renderPartialTicks;
+			newPartialTicks += this.elapsedPartialTicks;
+			newPartialTicks -= (int) this.renderPartialTicks;
+			if (newPartialTicks > this.renderPartialTicks) {
+				this.renderPartialTicks = newPartialTicks;
+			}
 			this.lastMs = newMs;
 			return;
 		}
-		this.millisSinceEnable = Minecraft.getSystemTime();
-		this.ticksSinceEnable = 0;
+		this.millisSinceTick = Minecraft.getSystemTime();
 		this.lastMs = Minecraft.getSystemTime();
 		TimerMod.shouldTick.set(true); // The client should always tick if it once thrown out of the vanilla scheduling part, to make the server tick, etc.
 		super.updateTimer();
