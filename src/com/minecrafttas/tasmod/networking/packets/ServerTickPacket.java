@@ -19,33 +19,29 @@ public class ServerTickPacket implements Packet {
 	/**
 	 * Creates a new tick packet containing a uuid and the tick count
 	 */
-	public ServerTickPacket(UUID uuid, int tick) {
+	public ServerTickPacket(UUID uuid) {
 		this.uuid = uuid;
-		this.tick = tick;
 	}
 	
 	protected UUID uuid;
-	protected int tick;
 	
 	/**
 	 * This will trigger the packet handler
 	 */
 	@Override
 	public void handle() {
-		TickSyncServer.onPacket(uuid, tick);
+		TickSyncServer.onPacket(uuid);
 	}
 
 	@Override
 	public PacketBuffer serialize(PacketBuffer buf) {
 		buf.writeUniqueId(this.uuid);
-		buf.writeInt(this.tick);
 		return buf;
 	}
 
 	@Override
 	public void deserialize(PacketBuffer buf) {
 		this.uuid = buf.readUniqueId();
-		this.tick = buf.readInt();
 	}
 
 }

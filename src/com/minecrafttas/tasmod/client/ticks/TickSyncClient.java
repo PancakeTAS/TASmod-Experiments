@@ -1,7 +1,5 @@
 package com.minecrafttas.tasmod.client.ticks;
 
-import java.util.UUID;
-
 import com.minecrafttas.tasmod.networking.Client;
 import com.minecrafttas.tasmod.networking.packets.ServerTickPacket;
 
@@ -15,11 +13,6 @@ import net.minecraft.client.Minecraft;
  * @author Pancake
  */
 public class TickSyncClient {
-
-	/**
-	 * This is the tick the client is currently on.
-	 */
-	private static int tick;
 	
 	/**
 	 * Handles incoming tick packets from the server to the client
@@ -28,11 +21,8 @@ public class TickSyncClient {
 	 * @param uuid Server UUID, null
 	 * @param tick Current tick of the server
 	 */
-	public static void onPacket(UUID uuid, int tick) {
-//		if ((tick-1) != TickSyncClient.tick)
-//			return;
+	public static void onPacket() {
 		TimerMod.shouldTick.set(true);
-		tick++;
 	}
 
 	/**
@@ -44,7 +34,7 @@ public class TickSyncClient {
 	public static void clientPostTick(Minecraft mc) {
 		if (mc.player == null)
 			return;
-		Client.sendPacket(new ServerTickPacket(mc.player.getGameProfile().getId(), TickSyncClient.tick));
+		Client.sendPacket(new ServerTickPacket(mc.player.getGameProfile().getId()));
 	}
 	
 }
