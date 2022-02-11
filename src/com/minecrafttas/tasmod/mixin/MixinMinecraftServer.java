@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.minecrafttas.tasmod.CommonTASmod;
+import com.minecrafttas.tasmod.networking.Server;
 import com.minecrafttas.tasmod.ticks.TickSyncServer;
 
 import net.minecraft.server.MinecraftServer;
@@ -42,7 +43,7 @@ public abstract class MixinMinecraftServer {
 	 */
 	@Redirect(method = "run", at = @At(value = "INVOKE", target = "Ljava/lang/Thread;sleep(J)V"))
 	public void customTick(long something) throws Throwable {
-		if (TickSyncServer.shouldTick.compareAndSet(true, false) || playerList.getCurrentPlayerCount() == 0) {
+		if (TickSyncServer.shouldTick.compareAndSet(true, false) || Server.getConnectionCount() == 0) {
 			// Calculate the time a tick took
 			long time = System.currentTimeMillis();
 			// Tick the server

@@ -12,6 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.exceptions.ServerAlreadyRunningException;
 import com.minecrafttas.tasmod.networking.packets.Packet;
+import com.minecrafttas.tasmod.ticks.TickSyncServer;
 
 /**
  * The TASmod itself has a custom connection running next to the minecraft one. 
@@ -28,6 +29,11 @@ public class Server {
 	 * Interrupting it will always close the connection and end the thread.
 	 */
 	private static Thread instance;
+	
+	/**
+	 * Count of clients connected to the server
+	 */
+	private static int connections;
 	
 	/**
 	 * This is the server socket. Interrupting it will always close the connection and end the thread (instance).
@@ -66,6 +72,8 @@ public class Server {
 		if (isRunning)
 			Server.serverSocket.close();
 		
+		// Clear the amount of connections
+		Server.connections = 0;
 		// Clear the list of packets to send
 		Server.packetsToSend = new LinkedBlockingQueue<>();
 		// Start a server
@@ -76,8 +84,10 @@ public class Server {
 				while (true) {
 					Socket clientSocket = serverSocket.accept();
 					final LinkedBlockingQueue<Packet> queue = new LinkedBlockingQueue<>();
-					packetsToSend.add(queue);
+					Server.packetsToSend.add(queue);
 					Thread handler = new Thread(() -> {
+						Server.connections++;
+						TickSyncServer.shouldTick.set(true); // make the server tick once
 						try {
 							CommonHandler.handleSocket(clientSocket, queue); // this will create a new thread for outstream and use the current thread for instream
 						} catch (EOFException exception) {
@@ -86,6 +96,8 @@ public class Server {
 						} catch (Exception exception) {
 							TASmod.LOGGER.error("Custom TASmod client connection was unexpectedly shutdown {}", exception);
 						}
+						TickSyncServer.shouldTick.set(true); // make the server tick in order to leave the world
+						Server.connections--;
 					});
 					handler.setDaemon(true);
 					handler.start();
@@ -112,6 +124,15 @@ public class Server {
 	public static void killServer() throws IOException {
 		if (Server.instance != null)
 			Server.serverSocket.close();
+		Server.connections = 0;
+	}
+
+	/**
+	 * Obtains the amount of connections connected to this socket
+	 * @return Connection count
+	 */
+	public static int getConnectionCount() {
+		return Server.connections;
 	}
 	
 }
