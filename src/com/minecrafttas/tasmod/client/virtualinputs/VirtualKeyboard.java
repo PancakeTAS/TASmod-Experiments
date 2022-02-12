@@ -56,6 +56,7 @@ public class VirtualKeyboard {
 	}
 	
 	/**
+	 * This method is a reimplementation of LWJGL's getEventKey()
 	 * This method returns the event key of the current packet 
 	 * @return Event Key Code 
 	 */
@@ -64,6 +65,7 @@ public class VirtualKeyboard {
 	}
 	
 	/**
+	 * This method is a reimplementation of LWJGL's getEventCharacter()
 	 * This method returns the event key of the current packet as a charater
 	 * @return Event Key Character
 	 */
@@ -72,6 +74,7 @@ public class VirtualKeyboard {
 	}
 	
 	/**
+	 * This method is a reimplementation of LWJGL's getEventKeyState()
 	 * This method returns the event key state of the current packet
 	 * @return Event Key State
 	 */
