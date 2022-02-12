@@ -6,6 +6,7 @@ import com.minecrafttas.tasmod.CommonTASmod;
 import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.client.ticks.TickSyncClient;
 import com.minecrafttas.tasmod.client.ticks.TimerMod;
+import com.minecrafttas.tasmod.client.virtualinputs.VirtualMouse;
 import com.minecrafttas.tasmod.exceptions.ClientAlreadyRunningException;
 import com.minecrafttas.tasmod.networking.Client;
 
@@ -124,6 +125,10 @@ public class ClientTASmod extends CommonTASmod {
 	 */
 	public void onClientTick(Minecraft mc) {
 		TASmod.LOGGER.debug("Client Tick");
+		/* Update virtual mouse */
+		TASmod.LOGGER.debug("Updating virtual mouse DX and DY");
+		VirtualMouse.poll();
+		TASmod.LOGGER.debug("Virtual mouse updated pre tick");
 	}
 	
 	/**
