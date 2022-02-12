@@ -84,7 +84,7 @@ public class VirtualKeyboard {
 	
 	/**
 	 * This method is a custom reimplementation of LWJGL's isKeyDown. Instead of checking the actual keyboard, this will check the virtual keyboard replica.
-	 * @param keycode Key Code+
+	 * @param keycode Key Code
 	 * 
 	 * @return Whether given Key Code is pressed or not
 	 */
