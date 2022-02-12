@@ -2,6 +2,8 @@ package com.minecrafttas.tasmod.client.virtualinputs;
 
 import org.lwjgl.input.Keyboard;
 
+import com.minecrafttas.tasmod.TASmod;
+
 /**
  * Virtual keyboard replacing the LWJGL keyboard. This keyboard manages keys from LWJGL and custom sources.
  * @author Pancake
@@ -34,6 +36,7 @@ public class VirtualKeyboard {
 	 * In the case of this virtual keyboard, it also updates the internal keyboard replica which is being used by isKeyDown
 	 */
 	public static boolean next() {
+		TASmod.LOGGER.debug("Processing next keyboard event...");
 		boolean hasNext;
 		
 		/* Input Source 1: The actual keyboard */
@@ -47,7 +50,8 @@ public class VirtualKeyboard {
 		
 		/* Input Source 2 (example): The playback file. Add custom input packet sources here into an else block and update hasNext for future input sources. */
 		
-		VirtualKeyboard.keyStates[VirtualKeyboard.eventKeyCode] = VirtualKeyboard.eventKeyState; // Update the keyboard replica
+		TASmod.LOGGER.debug("Processed next keyboard event");
+		if (hasNext) VirtualKeyboard.keyStates[VirtualKeyboard.eventKeyCode] = VirtualKeyboard.eventKeyState; // Update the keyboard replica
 		return hasNext;
 	}
 	
