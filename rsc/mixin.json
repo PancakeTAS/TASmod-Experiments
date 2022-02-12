@@ -11,6 +11,11 @@
     "client": [
     	"client.accessor.AccessMinecraft",
     	"client.accessor.AccessTimer",
-		"client.events.HookMinecraft"
+		"client.events.HookMinecraft",
+		"client.virtualinputs.MixinGameSettingsVirtualInputs",
+		"client.virtualinputs.MixinGuiContainerVirtualInputs",
+		"client.virtualinputs.MixinGuiScreenVirtualInputs",
+		"client.virtualinputs.MixinKeyBindingVirtualInputs",
+		"client.virtualinputs.MixinMinecraftVirtualInputs"
 	]
 }
