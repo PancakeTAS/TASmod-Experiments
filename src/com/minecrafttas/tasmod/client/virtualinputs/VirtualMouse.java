@@ -13,7 +13,7 @@ public class VirtualMouse {
 	/**
 	 * This is the mouse button replica. 
 	 */
-	private static boolean[] buttonStates = new boolean[256];
+	private static boolean[] buttonStates = new boolean[512];
 	
 	/**
 	 * This is the button code of the button in the current event
@@ -43,19 +43,31 @@ public class VirtualMouse {
 	/**
 	 * This is the delta x coordinate of the mouse updating every tick
 	 */
+	@SuppressWarnings("unused") // Will be used for playback later...
 	private static int dx;
 	
 	/**
 	 * This is the delta y coordinate of the mouse updating every tick
 	 */
+	@SuppressWarnings("unused") // Will be used for playback later...
 	private static int dy;
+	
+	/**
+	 * This is the delta x coordinate that is being reset after catched once and actually returned in getDX
+	 */
+	private static int rdx;
+	
+	/**
+	 * This is the delta y coordinate that is being reset after catched once and actually returned in getDY
+	 */
+	private static int rdy;
 	
 	/**
 	 * This method updates getDX and getDY and is being called on tick
 	 */
 	public static void poll() {
-		VirtualMouse.dx = Mouse.getDX();
-		VirtualMouse.dy = Mouse.getDY();
+		VirtualMouse.dx = VirtualMouse.rdx = Mouse.getDX();
+		VirtualMouse.dy = VirtualMouse.rdy = Mouse.getDY();
 	}
 	
 	/**
@@ -81,7 +93,7 @@ public class VirtualMouse {
 		/* Input Source 2 (example): The playback file. Add custom input packet sources here into an else block and update hasNext for future input sources. */
 		
 		TASmod.LOGGER.debug("Processed next mouse event");
-		if (hasNext) VirtualMouse.buttonStates[VirtualMouse.eventButton] = VirtualMouse.eventButtonState; // Update the keyboard replica
+		if (hasNext) VirtualMouse.buttonStates[VirtualMouse.eventButton+256] = VirtualMouse.eventButtonState; // Update the keyboard replica
 		return hasNext;
 	}
 	
@@ -163,7 +175,9 @@ public class VirtualMouse {
 	 * @return Delta x pos
 	 */
 	public static int getDX() {
-		return VirtualMouse.dx;
+		int ret = VirtualMouse.rdx;
+		VirtualMouse.rdx = 0;
+		return ret;
 	}
 	
 	/**
@@ -172,7 +186,9 @@ public class VirtualMouse {
 	 * @return Delta y pos
 	 */
 	public static int getDY() {
-		return VirtualMouse.dy;
+		int ret = VirtualMouse.rdy;
+		VirtualMouse.rdy = 0;
+		return ret;
 	}
 	
 }
