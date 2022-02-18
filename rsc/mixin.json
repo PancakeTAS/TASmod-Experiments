@@ -12,10 +12,18 @@
     	"client.accessor.AccessMinecraft",
     	"client.accessor.AccessTimer",
 		"client.events.HookMinecraft",
+		"client.virtualinputs.MixinEntityRendererVirtualInputs",
 		"client.virtualinputs.MixinGameSettingsVirtualInputs",
+		"client.virtualinputs.MixinGuiChatVirtualInputs",
+		"client.virtualinputs.MixinGuiClickableScrolledSelectionListProxyVirtualInputs",
+		"client.virtualinputs.MixinGuiContainerCreativeVirtualInputs",
 		"client.virtualinputs.MixinGuiContainerVirtualInputs",
+		"client.virtualinputs.MixinGuiScreenAdvancementsVirtualInputs",
 		"client.virtualinputs.MixinGuiScreenVirtualInputs",
+		"client.virtualinputs.MixinGuiSlotVirtualInputs",
 		"client.virtualinputs.MixinKeyBindingVirtualInputs",
-		"client.virtualinputs.MixinMinecraftVirtualInputs"
+		"client.virtualinputs.MixinMinecraftVirtualInputs",
+		"client.virtualinputs.MixinMouseHelperVirtualInputs",
+		"client.virtualinputs.MixinStatsVirtualInputs"
 	]
 }

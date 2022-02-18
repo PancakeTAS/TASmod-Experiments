@@ -5,11 +5,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.minecrafttas.tasmod.client.virtualinputs.VirtualKeyboard;
+import com.minecrafttas.tasmod.client.virtualinputs.VirtualMouse;
 
 import net.minecraft.client.Minecraft;
 
 /**
- * This mixin hooks the keyboard of minecraft to the virtual one
+ * This mixin hooks the keyboard and mouse of minecraft to the virtual one
  * @author Pancake
  */
 @Mixin(Minecraft.class)
@@ -72,6 +73,16 @@ public class MixinMinecraftVirtualInputs {
 	}
 	
 	/**
+	 * IMPLEMENTATION NOTICE: 
+	 * displayGuiScreen() -> Mouse.next() redirects to VirtualMouse.next()
+	 * @return Virtual next packet state
+	 */
+	@Redirect(method = "displayGuiScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;next()Z", remap = false))
+	public boolean redirect_displayGuiScreen_next2() {
+		return VirtualMouse.next();
+	}
+	
+	/**
 	 * 
 	 * Hooks for
 	 * runTickKeyboard()
@@ -127,6 +138,54 @@ public class MixinMinecraftVirtualInputs {
 	@Redirect(method = "runTickKeyboard", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", remap = false))
 	public boolean redirect_runTickKeyboard_getEventKeyState() {
 		return VirtualKeyboard.getEventKeyState();
+	}
+	
+	/**
+	 * 
+	 * Hooks for
+	 * runTickMouse()
+	 * 
+	 * 
+	 */
+	
+	/**
+	 * IMPLEMENTATION NOTICE: 
+	 * runTickMouse() -> Mouse.next() redirects to VirtualMouse.next()
+	 * @return Virtual next packet state
+	 */
+	@Redirect(method = "runTickMouse", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;next()Z", remap = false))
+	public boolean redirect_runTickMouse_next() {
+		return VirtualMouse.next();
+	}
+	
+	/**
+	 * IMPLEMENTATION NOTICE: 
+	 * runTickMouse() -> Mouse.getEventButton() redirects to VirtualMouse.getEventButton()
+	 * @return Virtual event button
+	 */
+	@Redirect(method = "runTickMouse", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;getEventButton()I", remap = false))
+	public int redirect_runTickMouse_getEventButton() {
+		return VirtualMouse.getEventButton();
+	}
+	
+	/**
+	 * IMPLEMENTATION NOTICE: 
+	 * runTickMouse() -> Mouse.getEventButtonState() redirects to VirtualMouse.getEventButtonState()
+	 * @return Virtual event button state
+	 */
+	@Redirect(method = "runTickMouse", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;getEventButtonState()Z", remap = false))
+	public boolean redirect_runTickMouse_getEventButtonState() {
+		return VirtualMouse.getEventButtonState();
+	}
+	
+	/**
+	 * IMPLEMENTATION NOTICE: 
+	 * runTickMouse() -> Mouse.getEventDWheel() redirects to VirtualMouse.getEventDWheel()
+	 * @return Virtual event button state
+	 */
+	@Redirect(method = "runTickMouse", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;getEventDWheel()I", remap = false))
+	public int redirect_runTickMouse_getEventDWheel() {
+		return VirtualMouse.getEventDWheel();
 	}
 	
 }
