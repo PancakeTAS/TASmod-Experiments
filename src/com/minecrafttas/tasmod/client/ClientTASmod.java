@@ -6,11 +6,15 @@ import com.minecrafttas.tasmod.CommonTASmod;
 import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.client.ticks.TickSyncClient;
 import com.minecrafttas.tasmod.client.ticks.TimerMod;
+import com.minecrafttas.tasmod.client.virtualinputs.VirtualKeyboard;
 import com.minecrafttas.tasmod.client.virtualinputs.VirtualMouse;
 import com.minecrafttas.tasmod.exceptions.ClientAlreadyRunningException;
 import com.minecrafttas.tasmod.networking.Client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -146,6 +150,27 @@ public class ClientTASmod extends CommonTASmod {
 		TASmod.LOGGER.debug("Updating tick sync post tick");
 		TickSyncClient.clientPostTick(mc);
 		TASmod.LOGGER.debug("Tick sync was updated post tick");
+	}
+	
+	/**
+	 * Renders overlays every frame
+	 * 
+	 * IMPLEMENTATION NOTICE:
+	 * This is a forge event called while the HUD is rendered
+	 * 
+	 * @param mc Instance of Minecraft
+	 */
+	@SubscribeEvent
+	public void onClientRender(RenderGameOverlayEvent e) {
+		if (e.getType() != ElementType.TEXT) return; // Only render on this certain event
+		
+		TASmod.LOGGER.debug("Client Render Loop");
+		/* Render mouse and keyboard */
+		TASmod.LOGGER.debug("Rendering keyboard and mouse");
+		final ScaledResolution res = e.getResolution();
+		VirtualKeyboard.render(res.getScaledWidth(), res.getScaledHeight());
+		VirtualMouse.render(res.getScaledWidth(), res.getScaledHeight());
+		TASmod.LOGGER.debug("Keyboard and mouse were rendered");
 	}
 	
 }

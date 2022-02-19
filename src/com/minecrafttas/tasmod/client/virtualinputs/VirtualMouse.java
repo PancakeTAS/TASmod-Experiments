@@ -191,4 +191,14 @@ public class VirtualMouse {
 		return ret;
 	}
 	
+	/**
+	 * Renders the current keyStates to the screen
+	 * 
+	 * @param width Width of the screen (scaled)
+	 * @param height Height of the screen (scaled)
+	 */
+	public static void render(int width, int height) {
+		
+	}
+	
 }
