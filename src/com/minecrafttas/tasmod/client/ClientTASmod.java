@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.minecrafttas.tasmod.CommonTASmod;
 import com.minecrafttas.tasmod.TASmod;
+import com.minecrafttas.tasmod.TASmod.Tool;
 import com.minecrafttas.tasmod.client.ticks.TickSyncClient;
 import com.minecrafttas.tasmod.client.ticks.TimerMod;
 import com.minecrafttas.tasmod.client.virtualinputs.VirtualKeyboard;
@@ -165,12 +166,14 @@ public class ClientTASmod extends CommonTASmod {
 		if (e.getType() != ElementType.TEXT) return; // Only render on this certain event
 		
 		TASmod.LOGGER.debug("Client Render Loop");
-		/* Render mouse and keyboard */
-		TASmod.LOGGER.debug("Rendering keyboard and mouse");
-		final ScaledResolution res = e.getResolution();
-		VirtualKeyboard.render(res.getScaledWidth(), res.getScaledHeight());
-		VirtualMouse.render(res.getScaledWidth(), res.getScaledHeight());
-		TASmod.LOGGER.debug("Keyboard and mouse were rendered");
+		if (Tool.TOOLS /* Whether tools should load or not */) {
+			/* Render mouse and keyboard */
+			TASmod.LOGGER.debug("Rendering keyboard and mouse");
+			final ScaledResolution res = e.getResolution();
+			VirtualKeyboard.render(res.getScaledWidth(), res.getScaledHeight());
+			VirtualMouse.render(res.getScaledWidth(), res.getScaledHeight());
+			TASmod.LOGGER.debug("Keyboard and mouse were rendered");
+		}
 	}
 	
 }

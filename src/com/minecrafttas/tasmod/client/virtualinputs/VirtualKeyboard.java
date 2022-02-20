@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.lwjgl.input.Keyboard;
 
 import com.minecrafttas.tasmod.TASmod;
+import com.minecrafttas.tasmod.TASmod.Tool;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -38,6 +39,7 @@ public class VirtualKeyboard {
 	/**
 	 * These are all overrides for rendering keybinds to the screen. THIS IS PURELY RENDERING!
 	 */
+	@Tool
 	private static HashMap<String, String> aliases = new HashMap<String, String>() {{
 		put("ESCAPE", "X");
 		put("F10", "10");
@@ -152,6 +154,7 @@ public class VirtualKeyboard {
 	 * @param width Width of the screen (scaled)
 	 * @param height Height of the screen (scaled)
 	 */
+	@Tool
 	public static void render(int width, int height) {
 		/* Render main keys */		
 		// ~ to =
@@ -263,6 +266,7 @@ public class VirtualKeyboard {
 	 * @param height Height of the box
 	 * @param keycode Keycode of the box
 	 */
+	@Tool
 	public static void renderKeyBox(int x, int y, int width, int height, int keycode) {
 		Gui.drawRect(x, y, x+width+2, y+height+2, keyStates[keycode] ? 0x80FFFFFF : 0x40000000);
 		String kchar = Keyboard.getKeyName(keycode);
@@ -281,6 +285,7 @@ public class VirtualKeyboard {
 	 * @param y Y position of the box
 	 * @param keycode Keycode of the box
 	 */
+	@Tool
 	public static void renderKeyBox(int x, int y, int keycode) {
 		renderKeyBox(x, y, 12, 12, keycode);
 	}
