@@ -5,6 +5,9 @@ import org.lwjgl.input.Mouse;
 import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.TASmod.Tool;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+
 /**
  * Virtual mouse replacing the LWJGL mouse. This mouse manages buttons and positions from LWJGL and custom sources.
  * @author Pancake
@@ -90,7 +93,6 @@ public class VirtualMouse {
 			VirtualMouse.x = Mouse.getX();
 			VirtualMouse.y = Mouse.getY();
 		}
-		
 		/* Input Source 2 (example): The playback file. Add custom input packet sources here into an else block and update hasNext for future input sources. */
 		
 		TASmod.LOGGER.debug("Processed next mouse event");
@@ -132,7 +134,7 @@ public class VirtualMouse {
 	 * @return Whether given Button Code is pressed or not
 	 */
 	public static boolean isButtonDown(int buttoncode) {
-		return VirtualMouse.buttonStates[buttoncode];
+		return VirtualMouse.buttonStates[buttoncode+256];
 	}
 	
 	/**
@@ -200,7 +202,44 @@ public class VirtualMouse {
 	 */
 	@Tool
 	public static void render(int width, int height) {
+		// Main buttons
+		renderButtonBox(330, 50, 20, 20, 0);
+		renderButtonBox(355, 50, 20, 20, 2);
+		renderButtonBox(380, 50, 20, 20, 1);
 		
+		// Mouse wheel up and down
+		Gui.drawRect(355, 25, 355+20+2, 25+20+2, getEventDWheel() > 0 ? 0x80FFFFFF : 0x40000000);
+		Minecraft.getMinecraft().fontRenderer.drawString("^", 1+355+20/2-Minecraft.getMinecraft().fontRenderer.getStringWidth("^")/2, 1+25+20/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, getEventDWheel() > 0 ? 0 : 0xFFFFFF);
+		Gui.drawRect(355, 75, 355+20+2, 75+20+2, getEventDWheel() < 0 ? 0x80FFFFFF : 0x40000000);
+		Minecraft.getMinecraft().fontRenderer.drawString("v", 1+355+20/2-Minecraft.getMinecraft().fontRenderer.getStringWidth("v")/2, 1+75+20/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, getEventDWheel() < 0 ? 0 : 0xFFFFFF);
+		
+	}
+	
+	/**
+	 * Renders a button box with a custom size to the screen.
+	 * 
+	 * @param x X position of the box
+	 * @param y Y position of the box
+	 * @param width Width of the box
+	 * @param height Height of the box
+	 * @param buttoncode Button code of the box
+	 */
+	@Tool
+	public static void renderButtonBox(int x, int y, int width, int height, int buttoncode) {
+		Gui.drawRect(x, y, x+width+2, y+height+2, buttonStates[buttoncode+256] ? 0x80FFFFFF : 0x40000000);
+		String bchar = "";
+		switch (buttoncode) {
+			case 0:
+				bchar = "LC";
+				break;
+			case 1:
+				bchar = "RC";
+				break;
+			case 2:
+				bchar = "MC";
+				break;
+		}
+		Minecraft.getMinecraft().fontRenderer.drawString(bchar, 1+x+width/2-Minecraft.getMinecraft().fontRenderer.getStringWidth(bchar)/2, 1+y+height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, (!buttonStates[buttoncode+256] ? Mouse.isButtonDown(buttoncode) ? 0x00AA00 : 0xFFFFFF : 0x000000));
 	}
 	
 }

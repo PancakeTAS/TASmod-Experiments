@@ -275,7 +275,7 @@ public class VirtualKeyboard {
 		kchar = kchar.replaceFirst("NUMPAD", "");
 		if (aliases.containsKey(kchar))
 			kchar = aliases.get(kchar);
-		Minecraft.getMinecraft().fontRenderer.drawString(kchar, 1+x+width/2-Minecraft.getMinecraft().fontRenderer.getStringWidth(kchar)/2, 1+y+height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, Keyboard.isKeyDown(keycode) ? 0x00AA00 : (!keyStates[keycode] ? 0xFFFFFF : 0x000000));
+		Minecraft.getMinecraft().fontRenderer.drawString(kchar, 1+x+width/2-Minecraft.getMinecraft().fontRenderer.getStringWidth(kchar)/2, 1+y+height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2,  (!keyStates[keycode] ? Keyboard.isKeyDown(keycode) ? 0x00AA00 : 0xFFFFFF : 0));
 	}
 	
 	/**
