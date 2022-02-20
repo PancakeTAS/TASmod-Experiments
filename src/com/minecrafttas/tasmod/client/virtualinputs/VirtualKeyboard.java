@@ -160,101 +160,101 @@ public class VirtualKeyboard {
 		// ~ to =
 		int x = 5;
 		for (int i = 0; i < 13; i++) {
-			renderKeyBox(x, 25, i+Keyboard.KEY_ESCAPE == Keyboard.KEY_ESCAPE ? Keyboard.KEY_GRAVE : i+Keyboard.KEY_ESCAPE);
+			VirtualKeyboard.renderKeyBox(x, 25, i+Keyboard.KEY_ESCAPE == Keyboard.KEY_ESCAPE ? Keyboard.KEY_GRAVE : i+Keyboard.KEY_ESCAPE);
 			x += 15;
 		}
 		// Q to |
 		x = 10+15;
 		for (int i = 0; i < 13; i++) {
-			renderKeyBox(x, 40, i+Keyboard.KEY_Q == Keyboard.KEY_RETURN ? 255 : i+Keyboard.KEY_Q);
+			VirtualKeyboard.renderKeyBox(x, 40, i+Keyboard.KEY_Q == Keyboard.KEY_RETURN ? 255 : i+Keyboard.KEY_Q);
 			x += 15;
 		}
 		// A to "
 		x = 12+15;
 		for (int i = 0; i < 11; i++) {
-			renderKeyBox(x, 55, i+Keyboard.KEY_A);
+			VirtualKeyboard.renderKeyBox(x, 55, i+Keyboard.KEY_A);
 			x += 15;
 		}
 		// Z to ?
 		x = 17+15;
 		for (int i = 0; i < 10; i++) {
-			renderKeyBox(x, 70, i+Keyboard.KEY_Z);
+			VirtualKeyboard.renderKeyBox(x, 70, i+Keyboard.KEY_Z);
 			x += 15;
 		}
 		
 		/* Render modifying keys */
-		renderKeyBox(5, 40, 17, 12, Keyboard.KEY_TAB);
-		renderKeyBox(5, 55, 19, 12, Keyboard.KEY_CAPITAL);
-		renderKeyBox(5, 70, 24, 12, Keyboard.KEY_LSHIFT);
-		renderKeyBox(5, 85, 17, 12, Keyboard.KEY_LCONTROL);
-		renderKeyBox(25, 85, 255);
-		renderKeyBox(40, 85, 17, 12, Keyboard.KEY_LMENU);
-		renderKeyBox(60, 85, 87, 12, Keyboard.KEY_SPACE);
-		renderKeyBox(150, 85, 17, 12, Keyboard.KEY_RMENU);
-		renderKeyBox(170, 85, 255);
-		renderKeyBox(185, 85, 255);
-		renderKeyBox(200, 85, 17, 12, Keyboard.KEY_RCONTROL);
-		renderKeyBox(182, 70, 35, 12, Keyboard.KEY_RSHIFT);
-		renderKeyBox(192, 55, 25, 12, Keyboard.KEY_RETURN);
-		renderKeyBox(200, 25, 17, 12, Keyboard.KEY_BACK);
+		VirtualKeyboard.renderKeyBox(5, 40, 17, 12, Keyboard.KEY_TAB);
+		VirtualKeyboard.renderKeyBox(5, 55, 19, 12, Keyboard.KEY_CAPITAL);
+		VirtualKeyboard.renderKeyBox(5, 70, 24, 12, Keyboard.KEY_LSHIFT);
+		VirtualKeyboard.renderKeyBox(5, 85, 17, 12, Keyboard.KEY_LCONTROL);
+		VirtualKeyboard.renderKeyBox(25, 85, 255);
+		VirtualKeyboard.renderKeyBox(40, 85, 17, 12, Keyboard.KEY_LMENU);
+		VirtualKeyboard.renderKeyBox(60, 85, 87, 12, Keyboard.KEY_SPACE);
+		VirtualKeyboard.renderKeyBox(150, 85, 17, 12, Keyboard.KEY_RMENU);
+		VirtualKeyboard.renderKeyBox(170, 85, 255);
+		VirtualKeyboard.renderKeyBox(185, 85, 255);
+		VirtualKeyboard.renderKeyBox(200, 85, 17, 12, Keyboard.KEY_RCONTROL);
+		VirtualKeyboard.renderKeyBox(182, 70, 35, 12, Keyboard.KEY_RSHIFT);
+		VirtualKeyboard.renderKeyBox(192, 55, 25, 12, Keyboard.KEY_RETURN);
+		VirtualKeyboard.renderKeyBox(200, 25, 17, 12, Keyboard.KEY_BACK);
 		
 		/* Render ESC to Pause */
-		renderKeyBox(5, 5, Keyboard.KEY_ESCAPE);
+		VirtualKeyboard.renderKeyBox(5, 5, Keyboard.KEY_ESCAPE);
 		// F1 to F4
 		x = 30;
 		for (int i = 0; i < 4; i++) {
-			renderKeyBox(x, 5, i+Keyboard.KEY_F1);
+			VirtualKeyboard.renderKeyBox(x, 5, i+Keyboard.KEY_F1);
 			x += 15;
 		}
 		// F5 to F8
 		x = 95;
 		for (int i = 0; i < 4; i++) {
-			renderKeyBox(x, 5, i+Keyboard.KEY_F5);
+			VirtualKeyboard.renderKeyBox(x, 5, i+Keyboard.KEY_F5);
 			x += 15;
 		}
 		// F9 to F12
 		x = 160;
 		for (int i = 0; i < 4; i++) {
-			renderKeyBox(x, 5, i + (i < 2 ? Keyboard.KEY_F9 : 0x55));
+			VirtualKeyboard.renderKeyBox(x, 5, i + (i < 2 ? Keyboard.KEY_F9 : 0x55));
 			x += 15;
 		}
 		// Print to Pause
-		renderKeyBox(222, 5, 255);
-		renderKeyBox(237, 5, Keyboard.KEY_SCROLL);
-		renderKeyBox(252, 5, Keyboard.KEY_PAUSE);
+		VirtualKeyboard.renderKeyBox(222, 5, 255);
+		VirtualKeyboard.renderKeyBox(237, 5, Keyboard.KEY_SCROLL);
+		VirtualKeyboard.renderKeyBox(252, 5, Keyboard.KEY_PAUSE);
 		// Insert to Page up
-		renderKeyBox(222, 25, Keyboard.KEY_INSERT);
-		renderKeyBox(237, 25, 255);
-		renderKeyBox(252, 25, Keyboard.KEY_PRIOR);
+		VirtualKeyboard.renderKeyBox(222, 25, Keyboard.KEY_INSERT);
+		VirtualKeyboard.renderKeyBox(237, 25, 255);
+		VirtualKeyboard.renderKeyBox(252, 25, Keyboard.KEY_PRIOR);
 		// Insert to Page up
-		renderKeyBox(222, 40, Keyboard.KEY_DELETE);
-		renderKeyBox(237, 40, Keyboard.KEY_END);
-		renderKeyBox(252, 40, Keyboard.KEY_NEXT);
+		VirtualKeyboard.renderKeyBox(222, 40, Keyboard.KEY_DELETE);
+		VirtualKeyboard.renderKeyBox(237, 40, Keyboard.KEY_END);
+		VirtualKeyboard.renderKeyBox(252, 40, Keyboard.KEY_NEXT);
 		
 		// Arrow keys
-		renderKeyBox(222, 85, Keyboard.KEY_LEFT);
-		renderKeyBox(237, 85, Keyboard.KEY_DOWN);
-		renderKeyBox(252, 85, Keyboard.KEY_RIGHT);
-		renderKeyBox(237, 70, Keyboard.KEY_UP);
+		VirtualKeyboard.renderKeyBox(222, 85, Keyboard.KEY_LEFT);
+		VirtualKeyboard.renderKeyBox(237, 85, Keyboard.KEY_DOWN);
+		VirtualKeyboard.renderKeyBox(252, 85, Keyboard.KEY_RIGHT);
+		VirtualKeyboard.renderKeyBox(237, 70, Keyboard.KEY_UP);
 		
 		// Numpad
-		renderKeyBox(267, 70, Keyboard.KEY_NUMPAD1);
-		renderKeyBox(282, 70, Keyboard.KEY_NUMPAD2);
-		renderKeyBox(297, 70, Keyboard.KEY_NUMPAD3);
-		renderKeyBox(267, 55, Keyboard.KEY_NUMPAD4);
-		renderKeyBox(282, 55, Keyboard.KEY_NUMPAD5);
-		renderKeyBox(297, 55, Keyboard.KEY_NUMPAD6);
-		renderKeyBox(267, 40, Keyboard.KEY_NUMPAD7);
-		renderKeyBox(282, 40, Keyboard.KEY_NUMPAD8);
-		renderKeyBox(297, 40, Keyboard.KEY_NUMPAD9);
-		renderKeyBox(267, 25, 255);
-		renderKeyBox(282, 25, Keyboard.KEY_DIVIDE);
-		renderKeyBox(297, 25, Keyboard.KEY_MULTIPLY);
-		renderKeyBox(312, 25, Keyboard.KEY_SUBTRACT);
-		renderKeyBox(297, 85, Keyboard.KEY_DECIMAL);
-		renderKeyBox(267, 85, 27, 12, Keyboard.KEY_NUMPAD0);
-		renderKeyBox(312, 40, 12, 27, Keyboard.KEY_ADD);
-		renderKeyBox(312, 70, 12, 27, 255);
+		VirtualKeyboard.renderKeyBox(267, 70, Keyboard.KEY_NUMPAD1);
+		VirtualKeyboard.renderKeyBox(282, 70, Keyboard.KEY_NUMPAD2);
+		VirtualKeyboard.renderKeyBox(297, 70, Keyboard.KEY_NUMPAD3);
+		VirtualKeyboard.renderKeyBox(267, 55, Keyboard.KEY_NUMPAD4);
+		VirtualKeyboard.renderKeyBox(282, 55, Keyboard.KEY_NUMPAD5);
+		VirtualKeyboard.renderKeyBox(297, 55, Keyboard.KEY_NUMPAD6);
+		VirtualKeyboard.renderKeyBox(267, 40, Keyboard.KEY_NUMPAD7);
+		VirtualKeyboard.renderKeyBox(282, 40, Keyboard.KEY_NUMPAD8);
+		VirtualKeyboard.renderKeyBox(297, 40, Keyboard.KEY_NUMPAD9);
+		VirtualKeyboard.renderKeyBox(267, 25, 255);
+		VirtualKeyboard.renderKeyBox(282, 25, Keyboard.KEY_DIVIDE);
+		VirtualKeyboard.renderKeyBox(297, 25, Keyboard.KEY_MULTIPLY);
+		VirtualKeyboard.renderKeyBox(312, 25, Keyboard.KEY_SUBTRACT);
+		VirtualKeyboard.renderKeyBox(297, 85, Keyboard.KEY_DECIMAL);
+		VirtualKeyboard.renderKeyBox(267, 85, 27, 12, Keyboard.KEY_NUMPAD0);
+		VirtualKeyboard.renderKeyBox(312, 40, 12, 27, Keyboard.KEY_ADD);
+		VirtualKeyboard.renderKeyBox(312, 70, 12, 27, 255);
 	}
 
 	/**
@@ -268,14 +268,14 @@ public class VirtualKeyboard {
 	 */
 	@Tool
 	public static void renderKeyBox(int x, int y, int width, int height, int keycode) {
-		Gui.drawRect(x, y, x+width+2, y+height+2, keyStates[keycode] ? 0x80FFFFFF : 0x40000000);
+		Gui.drawRect(x, y, x+width+2, y+height+2, VirtualKeyboard.keyStates[keycode] ? 0x80FFFFFF : 0x40000000);
 		String kchar = Keyboard.getKeyName(keycode);
 		if (kchar == null)
 			return;
 		kchar = kchar.replaceFirst("NUMPAD", "");
-		if (aliases.containsKey(kchar))
-			kchar = aliases.get(kchar);
-		Minecraft.getMinecraft().fontRenderer.drawString(kchar, 1+x+width/2-Minecraft.getMinecraft().fontRenderer.getStringWidth(kchar)/2, 1+y+height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2,  (!keyStates[keycode] ? Keyboard.isKeyDown(keycode) ? 0x00AA00 : 0xFFFFFF : 0));
+		if (VirtualKeyboard.aliases.containsKey(kchar))
+			kchar = VirtualKeyboard.aliases.get(kchar);
+		Minecraft.getMinecraft().fontRenderer.drawString(kchar, 1+x+width/2-Minecraft.getMinecraft().fontRenderer.getStringWidth(kchar)/2, 1+y+height/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2,  (!VirtualKeyboard.keyStates[keycode] ? Keyboard.isKeyDown(keycode) ? 0x00AA00 : 0xFFFFFF : 0));
 	}
 	
 	/**
@@ -287,7 +287,7 @@ public class VirtualKeyboard {
 	 */
 	@Tool
 	public static void renderKeyBox(int x, int y, int keycode) {
-		renderKeyBox(x, y, 12, 12, keycode);
+		VirtualKeyboard.renderKeyBox(x, y, 12, 12, keycode);
 	}
 	
 }
