@@ -181,6 +181,25 @@ public class VirtualKeyboard {
 		Gui.drawRect(237, 85, 247, 95, keyStates[0xD0] ? 0xFFFF0000 : 0xFFFFFFFF);
 		Gui.drawRect(252, 85, 262, 95, keyStates[0xCD] ? 0xFFFF0000 : 0xFFFFFFFF);
 		Gui.drawRect(237, 70, 247, 80, keyStates[0xC8] ? 0xFFFF0000 : 0xFFFFFFFF);
+		
+		// Numpad
+		Gui.drawRect(267, 70, 277, 80, keyStates[0x4F] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(282, 70, 292, 80, keyStates[0x50] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(297, 70, 307, 80, keyStates[0x51] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(267, 55, 277, 65, keyStates[0x4B] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(282, 55, 292, 65, keyStates[0x4C] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(297, 55, 307, 65, keyStates[0x4D] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(267, 40, 277, 50, keyStates[0x47] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(282, 40, 292, 50, keyStates[0x48] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(297, 40, 307, 50, keyStates[0x49] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(267, 25, 277, 35, 0xFFFFFFFF);
+		Gui.drawRect(282, 25, 292, 35, keyStates[0xB5] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(297, 25, 307, 35, keyStates[0x37] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(312, 25, 322, 35, keyStates[0x4A] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(297, 85, 307, 95, keyStates[0x53] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(267, 85, 292, 95, keyStates[0x52] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(312, 40, 322, 65, keyStates[0x4E] ? 0xFFFF0000 : 0xFFFFFFFF);
+		Gui.drawRect(312, 70, 322, 95, 0xFFFFFFFF);
 	}
 	
 }
