@@ -1,6 +1,8 @@
 package com.minecrafttas.tasmod.client.virtualinputs;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.util.vector.Vector;
+import org.lwjgl.util.vector.Vector2f;
 
 import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.TASmod.Tool;
@@ -212,7 +214,16 @@ public class VirtualMouse {
 		Minecraft.getMinecraft().fontRenderer.drawString("^", 1+355+20/2-Minecraft.getMinecraft().fontRenderer.getStringWidth("^")/2, 1+25+20/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, getEventDWheel() > 0 ? 0 : 0xFFFFFF);
 		Gui.drawRect(355, 75, 355+20+2, 75+20+2, getEventDWheel() < 0 ? 0x80FFFFFF : 0x40000000);
 		Minecraft.getMinecraft().fontRenderer.drawString("v", 1+355+20/2-Minecraft.getMinecraft().fontRenderer.getStringWidth("v")/2, 1+75+20/2-Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT/2, getEventDWheel() < 0 ? 0 : 0xFFFFFF);
-		
+	
+		// Mouse delta position
+		Gui.drawRect(410, 35, 410+50, 35+50, 0x40000000);
+		Vector2f vec = new Vector2f(dx, dy);
+		if (dx != 0 && dy != 0)
+			vec.normalise(vec);
+		int x = (int) (vec.getX()*25+25);
+		int y = (int) (vec.getY()*-25+25);
+		Gui.drawRect(410+x, 35+y, 410+x+2, 35+y+2, 0x80FFFFFF);
+		Minecraft.getMinecraft().fontRenderer.drawString(dx + " " + dy, 410, 25, 0xFFFFFF);
 	}
 	
 	/**
