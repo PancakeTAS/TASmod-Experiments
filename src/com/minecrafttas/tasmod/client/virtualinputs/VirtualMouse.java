@@ -3,6 +3,7 @@ package com.minecrafttas.tasmod.client.virtualinputs;
 import org.lwjgl.input.Mouse;
 
 import com.minecrafttas.tasmod.TASmod;
+import com.minecrafttas.tasmod.TASmod.Tool;
 
 /**
  * Virtual mouse replacing the LWJGL mouse. This mouse manages buttons and positions from LWJGL and custom sources.
@@ -197,6 +198,7 @@ public class VirtualMouse {
 	 * @param width Width of the screen (scaled)
 	 * @param height Height of the screen (scaled)
 	 */
+	@Tool
 	public static void render(int width, int height) {
 		
 	}
