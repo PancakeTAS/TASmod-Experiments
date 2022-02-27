@@ -10,6 +10,7 @@ import com.minecrafttas.tasmod.client.ticks.TimerMod;
 import com.minecrafttas.tasmod.client.virtualinputs.VirtualKeyboard;
 import com.minecrafttas.tasmod.client.virtualinputs.VirtualMouse;
 import com.minecrafttas.tasmod.exceptions.ClientAlreadyRunningException;
+import com.minecrafttas.tasmod.mixin.client.events.HookMinecraft;
 import com.minecrafttas.tasmod.networking.Client;
 
 import net.minecraft.client.Minecraft;
@@ -108,6 +109,27 @@ public class ClientTASmod extends CommonTASmod {
 	@SubscribeEvent
 	public void onClientDisconnect(ClientDisconnectionFromServerEvent e) {
 		TASmod.LOGGER.debug("TASmod Disconnect Server Phase");
+		/* Kill the custom client thread */
+		try {
+			TASmod.LOGGER.debug("Trying to kill the custom tasmod client");
+			Client.killClient(); // this will kill the client if it is running
+			TASmod.LOGGER.debug("Successfully killed the custom tasmod client without any unexpected issues");
+		} catch (IOException exception) {
+			TASmod.LOGGER.error("Exception thrown trying to kill the custom TASmod client!");
+			TASmod.LOGGER.error(exception);
+		}
+	}
+	
+	/**
+	 * Uninitialize the TASmod when shutting down the Minecraft applocation.
+	 * This will kill the custom TASmod client on a seperate thread
+	 * 
+	 * IMPLEMENTATION NOTICE:
+	 * Trace: net.minecraft.client.Minecraft.shutdownMinecraftApplet()V
+	 * Mixin: {@link HookMinecraft#hookShutdownMinecraftApplet()}
+	 */
+	public void onClientShutdown() {
+		TASmod.LOGGER.debug("TASmod Shutdown Client Phase");
 		/* Kill the custom client thread */
 		try {
 			TASmod.LOGGER.debug("Trying to kill the custom tasmod client");

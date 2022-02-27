@@ -37,4 +37,12 @@ public class HookMinecraft {
 		ClientTASmod.instance.onClientPostTick((Minecraft) (Object) this);
 	}
 	
+	/**
+	 * Triggers an Event in {@link ClientTASmod#onClientShutdown()} when the Minecraft Client is shutting down
+	 * @param ci Callback Info
+	 */
+	@Inject(method = "shutdownMinecraftApplet", at = @At("HEAD"))
+	public void hookShutdownMinecraftApplet(CallbackInfo ci) {
+		ClientTASmod.instance.onClientShutdown();
+	}
 }
