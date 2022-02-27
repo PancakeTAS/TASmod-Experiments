@@ -113,7 +113,7 @@ public class CommonTASmod {
 	 * @param mcserver Instance of Minecraft Server
 	 */
 	public void onServerTick(MinecraftServer mcserver) {
-		TASmod.LOGGER.debug("Server Tick");
+		TASmod.LOGGER.trace("Server Tick");
 	}
 
 	/**
@@ -125,11 +125,11 @@ public class CommonTASmod {
 	 * @param mcserver Instance of Minecraft Server
 	 */
 	public void onServerPostTick(MinecraftServer mcserver) {
-		TASmod.LOGGER.debug("Server Post Tick");
+		TASmod.LOGGER.trace("Server Post Tick");
 		/* Update tick sync */
-		TASmod.LOGGER.debug("Updating tick sync post tick");
+		TASmod.LOGGER.trace("Updating tick sync post tick");
 		TickSyncServer.serverPostTick();
-		TASmod.LOGGER.debug("Tick sync was updated post tick");
+		TASmod.LOGGER.trace("Tick sync was updated post tick");
 	}
 	
 }

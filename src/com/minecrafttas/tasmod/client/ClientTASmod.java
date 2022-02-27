@@ -129,11 +129,11 @@ public class ClientTASmod extends CommonTASmod {
 	 * @param mc Instance of Minecraft
 	 */
 	public void onClientTick(Minecraft mc) {
-		TASmod.LOGGER.debug("Client Tick");
+		TASmod.LOGGER.trace("Client Tick");
 		/* Update virtual mouse */
-		TASmod.LOGGER.debug("Updating virtual mouse DX and DY");
+		TASmod.LOGGER.trace("Updating virtual mouse DX and DY");
 		VirtualMouse.poll();
-		TASmod.LOGGER.debug("Virtual mouse updated pre tick");
+		TASmod.LOGGER.trace("Virtual mouse updated pre tick");
 	}
 	
 	/**
@@ -146,11 +146,11 @@ public class ClientTASmod extends CommonTASmod {
 	 * @param mc Instance of Minecraft
 	 */
 	public void onClientPostTick(Minecraft mc) {
-		TASmod.LOGGER.debug("Client Post Tick");
+		TASmod.LOGGER.trace("Client Post Tick");
 		/* Update tick sync */
-		TASmod.LOGGER.debug("Updating tick sync post tick");
+		TASmod.LOGGER.trace("Updating tick sync post tick");
 		TickSyncClient.clientPostTick(mc);
-		TASmod.LOGGER.debug("Tick sync was updated post tick");
+		TASmod.LOGGER.trace("Tick sync was updated post tick");
 	}
 	
 	/**
@@ -165,14 +165,14 @@ public class ClientTASmod extends CommonTASmod {
 	public void onClientRender(RenderGameOverlayEvent e) {
 		if (e.getType() != ElementType.TEXT) return; // Only render on this certain event
 		
-		TASmod.LOGGER.debug("Client Render Loop");
+		TASmod.LOGGER.trace("Client Render Loop");
 		if (Tool.TOOLS /* Whether tools should load or not */) {
 			/* Render mouse and keyboard */
-			TASmod.LOGGER.debug("Rendering keyboard and mouse");
+			TASmod.LOGGER.trace("Rendering keyboard and mouse");
 			final ScaledResolution res = e.getResolution();
 			VirtualKeyboard.render(res.getScaledWidth(), res.getScaledHeight());
 			VirtualMouse.render(res.getScaledWidth(), res.getScaledHeight());
-			TASmod.LOGGER.debug("Keyboard and mouse were rendered");
+			TASmod.LOGGER.trace("Keyboard and mouse were rendered");
 		}
 	}
 	

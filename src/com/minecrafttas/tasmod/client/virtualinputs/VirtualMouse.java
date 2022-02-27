@@ -79,7 +79,7 @@ public class VirtualMouse {
 	 * In the case of this virtual mouse, it also updates the internal mouse replica which is being used by isButtonDown and getX,getY
 	 */
 	public static boolean next() {
-		TASmod.LOGGER.debug("Processing next mouse event...");
+		TASmod.LOGGER.trace("Processing next mouse event...");
 		boolean hasNext;
 		
 		/* Input Source 1: The actual mouse */
@@ -94,7 +94,7 @@ public class VirtualMouse {
 		}
 		/* Input Source 2 (example): The playback file. Add custom input packet sources here into an else block and update hasNext for future input sources. */
 		
-		TASmod.LOGGER.debug("Processed next mouse event");
+		TASmod.LOGGER.trace("Processed next mouse event");
 		if (hasNext) VirtualMouse.buttonStates[VirtualMouse.eventButton+256] = VirtualMouse.eventButtonState; // Update the keyboard replica
 		return hasNext;
 	}
