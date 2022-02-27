@@ -47,7 +47,7 @@ public class CommonHandler {
 					outputStream.writeInt(packetData.length);
 					outputStream.write(packetData);
 					outputStream.flush();
-					TASmod.LOGGER.debug("Sent a " + packet.getClass().getSimpleName() + " to the socket.");
+					TASmod.LOGGER.trace("Sent a " + packet.getClass().getSimpleName() + " to the socket.");
 				}
 			} catch (Exception exception) {
 				// This exception is already logged by the thread one layer above
@@ -67,7 +67,7 @@ public class CommonHandler {
 			// Deserialize and run the packet
 			packet = PacketSerializer.deserialize(packetBuf);
 			packet.handle(); 
-			TASmod.LOGGER.debug("Handled a " + packet.getClass().getSimpleName() + " from the socket.");
+			TASmod.LOGGER.trace("Handled a " + packet.getClass().getSimpleName() + " from the socket.");
 		}
 	}
 	
