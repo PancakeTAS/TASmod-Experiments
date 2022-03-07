@@ -1,10 +1,16 @@
 package com.minecrafttas.tasmod.ticks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.minecrafttas.tasmod.networking.Server;
 import com.minecrafttas.tasmod.networking.packets.ClientTickPacket;
+
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 /**
  * This class manages tick sync
@@ -20,6 +26,8 @@ public class TickSyncServer {
 	 */
 	public static AtomicBoolean shouldTick = new AtomicBoolean(true);
 	
+	private static final List<UUID> playerList=new ArrayList<UUID>();
+	
 	/**
 	 * Handles incoming tick packets from the client to the server
 	 * This will put the uuid into a list of ticked clients and once every client
@@ -29,9 +37,8 @@ public class TickSyncServer {
 	 * @param tick Current tick of the player
 	 */
 	public static void onPacket(UUID uuid) {
-		shouldTick.set(true);
-		
-		// TODO: Wait for all clients not just any
+		addPlayer(uuid);
+		shouldTick.set(allPlayersDone());
 	}
 	
 	/**
@@ -42,4 +49,30 @@ public class TickSyncServer {
 		Server.sendPacket(new ClientTickPacket());
 	}
 	
+	/**
+	 * Adds a player uuid to the playerlist
+	 * @param uuid
+	 */
+	private static void addPlayer(UUID uuid) {
+		if (!playerList.contains(uuid)) { // Checks if the player is already in the list
+			playerList.add(uuid);
+		}
+	}
+
+	/**
+	 * Checks if all players are in {@link #playerList}
+	 * 
+	 * @return True, if all players are in {@link #playerList}
+	 */
+	private static boolean allPlayersDone() {
+		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+		for (EntityPlayerMP player : server.getPlayerList().getPlayers()) {
+			if (!playerList.contains(player.getGameProfile().getId())) {
+				return false;
+			}
+		}
+		playerList.clear();
+		return true;
+	}
+
 }
