@@ -1,4 +1,6 @@
 # Eclipse Files
+.gradle/
+bin/
 run-server/
 run/
 build/

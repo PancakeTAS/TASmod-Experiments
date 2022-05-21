@@ -1,0 +1,52 @@
+/* Add Plugins required for TASmod */
+plugins {
+	// Add Fabric-Loom plugin for the fabric modloader
+	id 'fabric-loom' version "0.12-SNAPSHOT" // To use chocoloom, change the version to a commit hash
+}
+
+// Set Java version compatibility to 8
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+
+// Update basic properties from gradle.properties
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
+
+/* Add Repositories required for TASmod */
+repositories {
+	maven {
+		name = "legacy-fabric"
+		url = "https://maven.legacyfabric.net"
+	}
+}
+
+/* Add Dependencies for TASmod */
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+}
+
+/* Add loom settings for legacy fabric */
+loom {
+	setIntermediaryUrl('https://maven.legacyfabric.net/net/fabricmc/intermediary/%1$s/intermediary-%1$s-v2.jar');
+	customMinecraftManifest.set("https://meta.legacyfabric.net/v2/manifest/${minecraft_version}")
+}
+
+/* Add some preprocessing to the resources */
+processResources {
+	// Update the version string in the fabric.mod.json file
+	inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+/* Add some post processing to the final jar file */
+jar {
+	// Add the LICENSE to the final jar
+	from("LICENSE.md") {
+		rename { "LICENSE_${project.archivesBaseName}"}
+	}
+}
