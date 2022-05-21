@@ -1,0 +1,31 @@
+{
+    "required": true,
+    "minVersion": "0.8.5",
+    "package": "com.minecrafttas.tasmod.mixin",
+    "refmap": "refmap.json",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "events.HookMinecraftServer",
+        "MixinMinecraftServer"
+    ],
+    "client": [
+    	"client.accessor.AccessClientTickTracker",
+    	"client.accessor.AccessMinecraftClient",
+    	"client.events.HookClientConnection",
+		"client.events.HookInGameHud",
+		"client.events.HookMinecraftClient",
+		"client.virtualinputs.MixinAdvancementsScreenVirtualInputs",
+		"client.virtualinputs.MixinChatScreenVirtualInputs",
+		"client.virtualinputs.MixinCreativeInventoryScreenVirtualInputs",
+		"client.virtualinputs.MixinCustomStatsListWidgetVirtualInputs",
+		"client.virtualinputs.MixinDelegatingRealmsClickableScrolledSelectionListWidgetVirtualInputs",
+		"client.virtualinputs.MixinGameOptionsVirtualInputs",
+		"client.virtualinputs.MixinGameRendererVirtualInputs",
+		"client.virtualinputs.MixinHandledScreenVirtualInputs",
+		"client.virtualinputs.MixinKeyBindingVirtualInputs",
+		"client.virtualinputs.MixinListWidgetVirtualInputs",
+		"client.virtualinputs.MixinMinecraftClientVirtualInputs",
+		"client.virtualinputs.MixinMouseInputVirtualInputs",
+		"client.virtualinputs.MixinScreenVirtualInputs"
+	]
+}
