@@ -19,7 +19,7 @@ public class CommonTASmod implements ModInitializer {
 	public static CommonTASmod instance;
 	
 	/**
-	 * Prepares the singleton when the SidedProxy annotation in com.minecrafttas.tasmod.TASmod creates an instance of this object
+	 * Prepares the singleton when the fabric modloader loads the mod
 	 */
 	public CommonTASmod() {
 		CommonTASmod.instance = this;
@@ -87,7 +87,7 @@ public class CommonTASmod implements ModInitializer {
 	 * Updates the TASmod at the start of a tick
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * Trace: net.minecraft.server.MinecraftServer.run()V at custom net.minecraft.server.MinecraftServer.tick()V
+	 * Trace: net.minecraft.server.MinecraftServer.run()V at custom net.minecraft.server.MinecraftServer.setupWorld()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.MixinMinecraftServer.customTick()V
 	 * @param mcserver Instance of Minecraft Server
 	 */
@@ -99,7 +99,7 @@ public class CommonTASmod implements ModInitializer {
 	 * Updates the TASmod at the end of a tick
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * Trace: net.minecraft.server.MinecraftServer.run()V after custom net.minecraft.server.MinecraftServer.tick()V
+	 * Trace: net.minecraft.server.MinecraftServer.run()V after custom net.minecraft.server.MinecraftServer.setupWorld()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.MixinMinecraftServer.customTick()V
 	 * @param mcserver Instance of Minecraft Server
 	 */

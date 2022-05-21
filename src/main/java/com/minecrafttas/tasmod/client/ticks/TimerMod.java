@@ -9,7 +9,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.ClientTickTracker;
 
 /**
- * The Minecraft client uses a timer to schedule ticks. It bases of the system clock and calculates the amount of ticks to run through by dividing it by the 
+ * The Minecraft client uses a timer (here ClientTickTracker) to schedule ticks. It bases of the system clock and calculates the amount of ticks to run through by dividing it by the 
  * tick length, which is 1000.0 / tps. TPS is ticks per second and is 20 in minecraft. Therefore a tick is 50.0 milliseconds long. Now we don't care about any of that.
  * This timer mod removes everything that has to do with scheduling (while being connected to a server) since this will be handled by a separate thread on the integrated server and tick sync.
  * 
@@ -31,7 +31,7 @@ public class TimerMod extends ClientTickTracker {
 	@Override 
 	public void tick() {
 		if (MinecraftClient.getInstance().getNetworkHandler() != null) {
-			((AccessClientTickTracker) this).setLastSyncSysClock(MinecraftClient.getTime()); // update the timer so that after returning to scheduling the client won't catch up all ticks (max 10)
+			((AccessClientTickTracker) this).setLastSyncSysClock(MinecraftClient.getTime()); // update the tick tracker so that after returning to scheduling the client won't catch up all ticks (max 10)
 			this.ticksThisFrame = 0; // do not do any ticks
 			long newMs = System.currentTimeMillis();
 			if (TimerMod.shouldTick.compareAndSet(true, false)) {
@@ -58,7 +58,7 @@ public class TimerMod extends ClientTickTracker {
 	}
 	
 	/**
-	 * This applies the timer mod to the minecraft timer instance
+	 * This applies the timer mod to the minecraft client tick tracker instance
 	 */
 	public static void applyTimerMod() {
 		((AccessMinecraftClient) MinecraftClient.getInstance()).setTricker(new TimerMod(20.0f));

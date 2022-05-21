@@ -20,11 +20,11 @@ import net.minecraft.client.network.ClientLoginNetworkHandler;
 public class HookClientLoginNetworkHandler {
 	
 	/**
-	 * Triggers an Event in {@link ClientTASmod#onClientConnect()} after the connection has been established
+	 * Triggers an Event in {@link ClientTASmod#onClientConnect()} after the connection handler has been created
 	 * @param ci Callback Info
 	 */
 	@Inject(method = "<init>", at = @At("RETURN"))
-	public void hookConnectEvent(CallbackInfo ci) {
+	public void hookInitEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientConnect();
 	}
 	

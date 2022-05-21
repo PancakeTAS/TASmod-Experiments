@@ -18,7 +18,7 @@ import net.minecraft.server.MinecraftServer;
 public class HookMinecraftServer {
 	
 	/**
-	 * Triggers an Event in {@link CommonTASmod#onServerLaunch()} once the server starts
+	 * Triggers an Event in {@link CommonTASmod#onServerLaunch()} when the server starts
 	 * @param ci Callback Info
 	 */
 	@Inject(method = "run", at = @At("HEAD"))
@@ -27,7 +27,7 @@ public class HookMinecraftServer {
 	}
 	
 	/**
-	 * Triggers an Event in {@link CommonTASmod#onServerStop()} once the server shuts down
+	 * Triggers an Event in {@link CommonTASmod#onServerStop()} when the server shuts down
 	 * @param ci Callback Info
 	 */
 	@Inject(method = "run", at = @At("RETURN"))

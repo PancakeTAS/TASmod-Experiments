@@ -29,7 +29,7 @@ public class HookInGameHud {
 	 */
 	@Inject(method = "render", at = @At(value = "INVOKE", target = "method_12176"))
 	public void hookRenderEvent(CallbackInfo ci) {
-		ClientTASmod.instance.onClientRender(new Window(client));
+		ClientTASmod.instance.onClientRender(new Window(this.client));
 	}
 	
 	@Shadow @Final

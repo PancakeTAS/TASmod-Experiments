@@ -24,7 +24,7 @@ public abstract class MixinMinecraftServer {
 	 * This mixin cancels the minecraft server ticking entirely. The server cannot tick anymore. The ticking will be done
 	 * by another redirect below
 	 * 
-	 * @param server The minecraft server that tick() was called on
+	 * @param server The minecraft server that setupWorld() aka tick was called on
 	 */
 	@Redirect(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/MinecraftServer;setupWorld()V"))
 	public void cancelDefaultTick(MinecraftServer server) {
@@ -47,7 +47,7 @@ public abstract class MixinMinecraftServer {
 			long time = System.currentTimeMillis();
 			// Tick the server
 			CommonTASmod.instance.onServerTick((MinecraftServer) (Object) this);
-			this.setupWorld();
+			this.setupWorld(); // setupWorld is tick
 			CommonTASmod.instance.onServerPostTick((MinecraftServer) (Object) this);
 			// Finish calculating the time a tick took
 			long tickTime = System.currentTimeMillis() - time;
