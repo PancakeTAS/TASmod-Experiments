@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "tasmod",
+  "version": "${version}",
+  "name": "Tool-Assisted Speedrun Mod",
+  "description": "Saves tickperfect inputs to a file and is able to play it back",
+  "authors": [
+    "tr7zw",
+    "Scribble",
+    "famous1622",
+    "Pancake"
+  ],
+  "contact": {
+    "homepage": "https://minecrafttas.com/",
+    "sources": "https://github.com/MinecraftTAS/TASmod-Experiments"
+  },
+  "license": "GPLv3",
+  "icon": "assets/modid/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.minecrafttas.tasmod.CommonTASmod"
+    ],
+    "client": [
+      "com.minecrafttas.tasmod.client.ClientTASmod"
+    ]
+  },
+  "mixins": [
+    "tasmod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.0",
+    "minecraft": "1.12.2"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
