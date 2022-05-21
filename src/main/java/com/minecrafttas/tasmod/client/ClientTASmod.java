@@ -10,8 +10,6 @@ import com.minecrafttas.tasmod.client.ticks.TimerMod;
 import com.minecrafttas.tasmod.client.virtualinputs.VirtualKeyboard;
 import com.minecrafttas.tasmod.client.virtualinputs.VirtualMouse;
 import com.minecrafttas.tasmod.exceptions.ClientAlreadyRunningException;
-import com.minecrafttas.tasmod.mixin.client.events.HookClientConnection;
-import com.minecrafttas.tasmod.mixin.client.events.HookMinecraftClient;
 import com.minecrafttas.tasmod.networking.Client;
 
 import net.fabricmc.api.ClientModInitializer;
@@ -31,7 +29,7 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 	public static ClientTASmod instance;
 	
 	/**
-	 * Prepares the singleton when the SidedProxy annotation in com.minecrafttas.tasmod.TASmod creates an instance of this object
+	 * Prepares the singleton when the fabric modloader loads the mod
 	 */
 	public ClientTASmod() {
 		ClientTASmod.instance = this;
@@ -40,7 +38,6 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 	
 	/**
 	 * Initialize the TASmod clientside.
-	 * This will register this class to the event bus from Forge, so that future Forge events will be triggered in this class
 	 */
 	public void onInitializeClient() {
 		TASmod.LOGGER.debug("Client TASmod Init Phase");
@@ -55,11 +52,10 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 	 * This will launch the custom TASmod client on a separate thread.
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * Trace: net.minecraft.network.ClientConnection.<init>()V
-	 * Mixin: {@link HookClientConnection#onClientConnect()}
+	 * Trace: net.minecraft.client.network.ClientLoginNetworkHandler.<init>()V
+	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookClientLoginNetworkHandler.hookInitEvent(CallbackInfo)V
 	 */
 	public void onClientConnect() {
-		// TODO
 		TASmod.LOGGER.debug("TASmod Connect Server Phase");
 		/* Launch the custom client thread */
 		try {
@@ -80,7 +76,7 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 	 * 
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.network.ClientConnection.disconnect()V
-	 * Mixin: {@link HookClientConnection#hookDisconnectEvent()}
+	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookClientConnection.hookDisconnectEvent(CallbackInfo)V
 	 */
 	public void onClientDisconnect() {
 		TASmod.LOGGER.debug("TASmod Disconnect Server Phase");
@@ -92,8 +88,8 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 	 * This will kill the custom TASmod client on a seperate thread
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * Trace: net.minecraft.client.Minecraft.shutdownMinecraftApplet()V
-	 * Mixin: {@link HookMinecraftClient#hookShutdownMinecraftApplet()}
+	 * Trace: net.minecraft.client.MinecraftClient.stop()V
+	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraftClient.hookStopEvent(CallbackInfo)V
 	 */
 	public void onClientShutdown() {
 		TASmod.LOGGER.debug("TASmod Shutdown Client Phase");
@@ -119,8 +115,8 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 	 * Updates the TASmod at the start of a client tick
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * Trace: net.minecraft.client.Minecraft.runTick()V
-	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraft.runTickEvent(CallbackInfo)V
+	 * Trace: net.minecraft.client.MinecraftClient.tick()V
+	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraftClient.hookTickEvent(CallbackInfo)V
 	 * 
 	 * @param mc Instance of Minecraft
 	 */
@@ -136,8 +132,8 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 	 * Updates the TASmod at the end of a client tick
 	 * 
 	 * IMPLEMENTATION NOTICE:
-	 * Trace: net.minecraft.client.Minecraft.runTick()V at RETURN
-	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraft.runTickPostEvent(CallbackInfo)V
+	 * Trace: net.minecraft.client.MinecraftClient.tick()V at RETURN
+	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraftClient.hookTickPostEvent(CallbackInfo)V
 	 * 
 	 * @param mc Instance of Minecraft
 	 */

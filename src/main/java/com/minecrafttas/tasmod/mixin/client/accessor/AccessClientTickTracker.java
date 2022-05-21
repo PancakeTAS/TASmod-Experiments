@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import net.minecraft.client.render.ClientTickTracker;
 
 /**
- * In order to access some fields of the timer class, an accessor is required.
+ * In order to access some fields of the client tick tracker class, an accessor is required.
  * @author Pancake
  */
 @Mixin(ClientTickTracker.class)

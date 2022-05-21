@@ -24,7 +24,7 @@ public class HookMinecraftClient {
 	 * @param ci Callback Info
 	 */
 	@Inject(method = "tick", at = @At("HEAD"))
-	public void hookRunTickEvent(CallbackInfo ci) {
+	public void hookTickEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientTick((MinecraftClient) (Object) this);
 	}
 	
@@ -33,16 +33,17 @@ public class HookMinecraftClient {
 	 * @param ci Callback Info
 	 */
 	@Inject(method = "tick", at = @At("RETURN"))
-	public void hookRunTickPostEvent(CallbackInfo ci) {
+	public void hookTickPostEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientPostTick((MinecraftClient) (Object) this);
 	}
 	
 	/**
-	 * Triggers an Event in {@link ClientTASmod#onClientShutdown()} when the Minecraft Client is shutting down
+	 * Triggers an Event in {@link ClientTASmod#onClientShutdown()} when the minecraft client is shutting down
 	 * @param ci Callback Info
 	 */
 	@Inject(method = "stop", at = @At("HEAD"))
-	public void hookShutdownMinecraftApplet(CallbackInfo ci) {
+	public void hookStopEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientShutdown();
 	}
+	
 }
