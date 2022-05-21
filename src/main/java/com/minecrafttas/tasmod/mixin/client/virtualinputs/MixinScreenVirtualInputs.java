@@ -15,17 +15,17 @@ import net.minecraft.client.gui.screen.Screen;
  */
 @Mixin(Screen.class)
 public class MixinScreenVirtualInputs {
-	
+
 	/**
-	 * 
+	 *
 	 * Hooks for
 	 * handleInput()
-	 * 
-	 * 
+	 *
+	 *
 	 */
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleInput() -> Keyboard.next() redirects to VirtualKeyboard.next()
 	 * @return Virtual next packet state
 	 */
@@ -33,9 +33,9 @@ public class MixinScreenVirtualInputs {
 	public boolean redirect_handleInput_next() {
 		return VirtualKeyboard.next();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleInput() -> Mouse.next() redirects to VirtualMouse.next()
 	 * @return Virtual next packet state
 	 */
@@ -43,17 +43,17 @@ public class MixinScreenVirtualInputs {
 	public boolean redirect_handleInput_next2() {
 		return VirtualMouse.next();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Hooks for
 	 * handleMouse()
-	 * 
-	 * 
+	 *
+	 *
 	 */
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventButton() redirects to VirtualMouse.getEventButton()
 	 * @return Virtual event button
 	 */
@@ -61,9 +61,9 @@ public class MixinScreenVirtualInputs {
 	public int redirect_handleMouse_getEventButton() {
 		return VirtualMouse.getEventButton();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventButtonState() redirects to VirtualMouse.getEventButtonState()
 	 * @return Virtual event button state
 	 */
@@ -71,9 +71,9 @@ public class MixinScreenVirtualInputs {
 	public boolean redirect_handleMouse_getEventButtonState() {
 		return VirtualMouse.getEventButtonState();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventX() redirects to VirtualMouse.getEventX()
 	 * @return Virtual mouse event x
 	 */
@@ -81,9 +81,9 @@ public class MixinScreenVirtualInputs {
 	public int redirect_handleMouse_getEventX() {
 		return VirtualMouse.getEventX();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventY() redirects to VirtualMouse.getEventY()
 	 * @return Virtual mouse event y
 	 */
@@ -91,17 +91,17 @@ public class MixinScreenVirtualInputs {
 	public int redirect_handleMouse_getEventY() {
 		return VirtualMouse.getEventY();
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * Hooks for
 	 * handleKeyboard()
-	 * 
-	 * 
+	 *
+	 *
 	 */
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleKeyboard() -> Keyboard.getEventKey() redirects to VirtualKeyboard.getEventKey()
 	 * @return Virtual event key
 	 */
@@ -109,9 +109,9 @@ public class MixinScreenVirtualInputs {
 	public int redirect_handleKeyboard_getEventKey() {
 		return VirtualKeyboard.getEventKey();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleKeyboard() -> Keyboard.getEventCharacter() redirects to VirtualKeyboard.getEventCharacter()
 	 * @return Virtual event character
 	 */
@@ -119,9 +119,9 @@ public class MixinScreenVirtualInputs {
 	public char redirect_handleKeyboard_getEventCharacter() {
 		return VirtualKeyboard.getEventCharacter();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleKeyboard() -> Keyboard.getEventKeyState() redirects to VirtualKeyboard.getEventKeyState()
 	 * @return Virtual event key state
 	 */
@@ -131,16 +131,16 @@ public class MixinScreenVirtualInputs {
 	}
 
 	/**
-	 * 
+	 *
 	 * Hooks for
 	 * hasAltDown()
 	 * hasControlDown()
 	 * hasShiftDown()
-	 * 
+	 *
 	 */
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * hasAltDown() -> Keyboard.isKeyDown() redirects to VirtualKeyboard.isKeyDown()
 	 * @return Virtual key state
 	 */
@@ -148,9 +148,9 @@ public class MixinScreenVirtualInputs {
 	private static boolean redirect_hasAltDown_isKeyDown(int code) {
 		return VirtualKeyboard.isKeyDown(code);
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * hasControlDown() -> Keyboard.isKeyDown() redirects to VirtualKeyboard.isKeyDown()
 	 * @return Virtual key state
 	 */
@@ -158,9 +158,9 @@ public class MixinScreenVirtualInputs {
 	private static boolean redirect_hasControlDown_isKeyDown(int code) {
 		return VirtualKeyboard.isKeyDown(code);
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * hasShiftDown() -> Keyboard.isKeyDown() redirects to VirtualKeyboard.isKeyDown()
 	 * @return Virtual key state
 	 */
@@ -168,5 +168,5 @@ public class MixinScreenVirtualInputs {
 	private static boolean redirect_hasShiftDown_isKeyDown(int code) {
 		return VirtualKeyboard.isKeyDown(code);
 	}
-	
+
 }

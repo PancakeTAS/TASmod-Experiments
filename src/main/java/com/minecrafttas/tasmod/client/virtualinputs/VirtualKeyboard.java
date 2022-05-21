@@ -17,25 +17,25 @@ import net.minecraft.client.gui.DrawableHelper;
 public class VirtualKeyboard {
 
 	/**
-	 * This is the keyboard replica. 
+	 * This is the keyboard replica.
 	 */
 	private static boolean[] keyStates = new boolean[256];
-	
+
 	/**
 	 * This is the key code of the key in the current event
 	 */
 	private static int eventKeyCode;
-	
+
 	/**
 	 * This is the key state of the key in the current event
 	 */
 	private static boolean eventKeyState;
-	
+
 	/**
 	 * This is the key character of the key in the current event as long as one exists
 	 */
 	private static char eventKeyCharacter;
-	
+
 	/**
 	 * These are all overrides for rendering keybinds to the screen. THIS IS PURELY RENDERING!
 	 */
@@ -85,7 +85,7 @@ public class VirtualKeyboard {
 		put("PERIOD", ".");
 		put("SLASH", "/");
 	}};
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's next() with additional input sources.
 	 * It fetches inputs from the keyboard and loads the next event packet, so that getEventXXX returns data of that specific packet.
@@ -94,7 +94,7 @@ public class VirtualKeyboard {
 	public static boolean next() {
 		TASmod.LOGGER.trace("Processing next keyboard event...");
 		boolean hasNext;
-		
+
 		/* Input Source 1: The actual keyboard */
 		hasNext = Keyboard.next(); // Fetch the actual keyboard for future events
 		// If the actual keyboard has any events, fetch them.
@@ -103,23 +103,23 @@ public class VirtualKeyboard {
 			VirtualKeyboard.eventKeyState = Keyboard.getEventKeyState();
 			VirtualKeyboard.eventKeyCharacter = Keyboard.getEventCharacter();
 		}
-		
+
 		/* Input Source 2 (example): The playback file. Add custom input packet sources here into an else block and update hasNext for future input sources. */
-		
+
 		TASmod.LOGGER.trace("Processed next keyboard event");
 		if (hasNext && /* Fix F11 */ VirtualKeyboard.eventKeyCode != Keyboard.KEY_F11) VirtualKeyboard.keyStates[VirtualKeyboard.eventKeyCode] = VirtualKeyboard.eventKeyState; // Update the keyboard replica
 		return hasNext && /* Fix F11 */ VirtualKeyboard.eventKeyCode != Keyboard.KEY_F11;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getEventKey()
-	 * This method returns the event key of the current packet 
-	 * @return Event Key Code 
+	 * This method returns the event key of the current packet
+	 * @return Event Key Code
 	 */
 	public static int getEventKey() {
 		return VirtualKeyboard.eventKeyCode;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getEventCharacter()
 	 * This method returns the event key of the current packet as a charater
@@ -128,7 +128,7 @@ public class VirtualKeyboard {
 	public static char getEventCharacter() {
 		return VirtualKeyboard.eventKeyCharacter;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getEventKeyState()
 	 * This method returns the event key state of the current packet
@@ -137,26 +137,26 @@ public class VirtualKeyboard {
 	public static boolean getEventKeyState() {
 		return VirtualKeyboard.eventKeyState;
 	}
-	
+
 	/**
 	 * This method is a custom reimplementation of LWJGL's isKeyDown. Instead of checking the actual keyboard, this will check the virtual keyboard replica.
 	 * @param keycode Key Code
-	 * 
+	 *
 	 * @return Whether given Key Code is pressed or not
 	 */
 	public static boolean isKeyDown(int keycode) {
 		return VirtualKeyboard.keyStates[keycode];
 	}
-	
+
 	/**
 	 * Renders the current keyStates to the screen
-	 * 
+	 *
 	 * @param width Width of the screen (scaled)
 	 * @param height Height of the screen (scaled)
 	 */
 	@Tool
 	public static void render(int width, int height) {
-		/* Render main keys */		
+		/* Render main keys */
 		// ~ to =
 		int x = 5;
 		for (int i = 0; i < 13; i++) {
@@ -181,7 +181,7 @@ public class VirtualKeyboard {
 			VirtualKeyboard.renderKeyBox(x, 70, i+Keyboard.KEY_Z);
 			x += 15;
 		}
-		
+
 		/* Render modifying keys */
 		VirtualKeyboard.renderKeyBox(5, 40, 17, 12, Keyboard.KEY_TAB);
 		VirtualKeyboard.renderKeyBox(5, 55, 19, 12, Keyboard.KEY_CAPITAL);
@@ -197,7 +197,7 @@ public class VirtualKeyboard {
 		VirtualKeyboard.renderKeyBox(182, 70, 35, 12, Keyboard.KEY_RSHIFT);
 		VirtualKeyboard.renderKeyBox(192, 55, 25, 12, Keyboard.KEY_RETURN);
 		VirtualKeyboard.renderKeyBox(200, 25, 17, 12, Keyboard.KEY_BACK);
-		
+
 		/* Render ESC to Pause */
 		VirtualKeyboard.renderKeyBox(5, 5, Keyboard.KEY_ESCAPE);
 		// F1 to F4
@@ -230,13 +230,13 @@ public class VirtualKeyboard {
 		VirtualKeyboard.renderKeyBox(222, 40, Keyboard.KEY_DELETE);
 		VirtualKeyboard.renderKeyBox(237, 40, Keyboard.KEY_END);
 		VirtualKeyboard.renderKeyBox(252, 40, Keyboard.KEY_NEXT);
-		
+
 		// Arrow keys
 		VirtualKeyboard.renderKeyBox(222, 85, Keyboard.KEY_LEFT);
 		VirtualKeyboard.renderKeyBox(237, 85, Keyboard.KEY_DOWN);
 		VirtualKeyboard.renderKeyBox(252, 85, Keyboard.KEY_RIGHT);
 		VirtualKeyboard.renderKeyBox(237, 70, Keyboard.KEY_UP);
-		
+
 		// Numpad
 		VirtualKeyboard.renderKeyBox(267, 70, Keyboard.KEY_NUMPAD1);
 		VirtualKeyboard.renderKeyBox(282, 70, Keyboard.KEY_NUMPAD2);
@@ -259,7 +259,7 @@ public class VirtualKeyboard {
 
 	/**
 	 * Renders a key box with a custom size to the screen.
-	 * 
+	 *
 	 * @param x X position of the box
 	 * @param y Y position of the box
 	 * @param width Width of the box
@@ -277,10 +277,10 @@ public class VirtualKeyboard {
 			kchar = VirtualKeyboard.aliases.get(kchar);
 		MinecraftClient.getInstance().textRenderer.draw(kchar, 1+x+width/2-MinecraftClient.getInstance().textRenderer.getStringWidth(kchar)/2, 1+y+height/2-MinecraftClient.getInstance().textRenderer.fontHeight/2,  (!VirtualKeyboard.keyStates[keycode] ? Keyboard.isKeyDown(keycode) ? 0x00AA00 : 0xFFFFFF : 0));
 	}
-	
+
 	/**
 	 * Renders a key box to the screen.
-	 * 
+	 *
 	 * @param x X position of the box
 	 * @param y Y position of the box
 	 * @param keycode Keycode of the box
@@ -289,5 +289,5 @@ public class VirtualKeyboard {
 	public static void renderKeyBox(int x, int y, int keycode) {
 		VirtualKeyboard.renderKeyBox(x, y, 12, 12, keycode);
 	}
-	
+
 }

@@ -11,7 +11,7 @@ import net.minecraft.util.PacketByteBuf;
  * This is part of Tick Sync
  * German: https://1drv.ms/p/s!Av_ysXerhm5CphLvLvguvL5QYe1A?e=MHPldP
  * English: https://1drv.ms/p/s!Av_ysXerhm5Cpha7Qq2tiVebd4DY?e=pzxOva
- * 
+ *
  * @author Pancake
  */
 public class ServerTickPacket implements Packet {
@@ -22,15 +22,15 @@ public class ServerTickPacket implements Packet {
 	public ServerTickPacket(UUID uuid) {
 		this.uuid = uuid;
 	}
-	
+
 	protected UUID uuid;
-	
+
 	/**
 	 * This will trigger the packet handler
 	 */
 	@Override
 	public void handle() {
-		TickSyncServer.onPacket(uuid);
+		TickSyncServer.onPacket(this.uuid);
 	}
 
 	@Override

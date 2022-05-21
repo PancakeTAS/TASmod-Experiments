@@ -16,7 +16,7 @@ import net.minecraft.client.gui.screen.AdvancementsScreen;
 public class MixinAdvancementsScreenVirtualInputs {
 
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * render() -> Mouse.isButtonDown() redirects to VirtualMouse.isButtonDown()
 	 * @return Virtual mouse buttoncheck
 	 */
@@ -24,5 +24,5 @@ public class MixinAdvancementsScreenVirtualInputs {
 	public boolean redirect_render_isButtonDown(int key) {
 		return VirtualMouse.isButtonDown(key);
 	}
-	
+
 }

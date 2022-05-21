@@ -16,7 +16,7 @@ import net.minecraft.client.gui.screen.ChatScreen;
 public class MixinChatScreenVirtualInputs {
 
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * render() -> Mouse.getX() redirects to VirtualMouse.getX()
 	 * @return Virtual mouse x
 	 */
@@ -24,9 +24,9 @@ public class MixinChatScreenVirtualInputs {
 	public int redirect_render_getX() {
 		return VirtualMouse.getX();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * render() -> Mouse.getY() redirects to VirtualMouse.getY()
 	 * @return Virtual mouse y
 	 */
@@ -34,9 +34,9 @@ public class MixinChatScreenVirtualInputs {
 	public int redirect_render_getY() {
 		return VirtualMouse.getY();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventDWheel() redirects to VirtualMouse.getEventDWheel()
 	 * @return Virtual event mouse wheel
 	 */
@@ -46,7 +46,7 @@ public class MixinChatScreenVirtualInputs {
 	}
 
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * mouseClicked() -> Mouse.getX() redirects to VirtualMouse.getX()
 	 * @return Virtual mouse x
 	 */
@@ -54,9 +54,9 @@ public class MixinChatScreenVirtualInputs {
 	public int redirect_mouseClicked_getX() {
 		return VirtualMouse.getX();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * mouseClicked() -> Mouse.getY() redirects to VirtualMouse.getY()
 	 * @return Virtual mouse y
 	 */

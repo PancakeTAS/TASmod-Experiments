@@ -14,9 +14,9 @@ import net.minecraft.client.MouseInput;
  */
 @Mixin(MouseInput.class)
 public class MixinMouseInputVirtualInputs {
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * updateMouse() -> Mouse.getDX() redirects to VirtualMouse.getDX()
 	 * @return Virtual mouse event delta x
 	 */
@@ -24,9 +24,9 @@ public class MixinMouseInputVirtualInputs {
 	public int redirect_updateMouse_getDX() {
 		return VirtualMouse.getDX();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * updateMouse() -> Mouse.getDY() redirects to VirtualMouse.getDY()
 	 * @return Virtual mouse event delta y
 	 */
@@ -34,5 +34,5 @@ public class MixinMouseInputVirtualInputs {
 	public int redirect_updateMouse_getDY() {
 		return VirtualMouse.getDY();
 	}
-	
+
 }

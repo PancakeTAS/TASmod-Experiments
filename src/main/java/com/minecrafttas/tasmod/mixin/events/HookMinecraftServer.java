@@ -16,7 +16,7 @@ import net.minecraft.server.MinecraftServer;
  */
 @Mixin(MinecraftServer.class)
 public class HookMinecraftServer {
-	
+
 	/**
 	 * Triggers an Event in {@link CommonTASmod#onServerLaunch()} when the server starts
 	 * @param ci Callback Info
@@ -25,7 +25,7 @@ public class HookMinecraftServer {
 	public void hookRunEvent(CallbackInfo ci) {
 		CommonTASmod.instance.onServerLaunch();
 	}
-	
+
 	/**
 	 * Triggers an Event in {@link CommonTASmod#onServerStop()} when the server shuts down
 	 * @param ci Callback Info
@@ -34,5 +34,5 @@ public class HookMinecraftServer {
 	public void hookRunEndEvent(CallbackInfo ci) {
 		CommonTASmod.instance.onServerStop();
 	}
-	
+
 }

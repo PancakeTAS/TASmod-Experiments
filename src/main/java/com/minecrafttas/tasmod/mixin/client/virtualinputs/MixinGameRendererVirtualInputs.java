@@ -16,7 +16,7 @@ import net.minecraft.client.render.GameRenderer;
 public class MixinGameRendererVirtualInputs {
 
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * render() -> Mouse.isButtonDown() redirects to VirtualMouse.isButtonDown()
 	 * @return Virtual mouse buttoncheck
 	 */
@@ -24,9 +24,9 @@ public class MixinGameRendererVirtualInputs {
 	public boolean redirect_render_isButtonDown(int key) {
 		return VirtualMouse.isButtonDown(key);
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * render() -> Mouse.getX() redirects to VirtualMouse.getX()
 	 * @return Virtual mouse x
 	 */
@@ -34,9 +34,9 @@ public class MixinGameRendererVirtualInputs {
 	public int redirect_render_getX() {
 		return VirtualMouse.getX();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * render() -> Mouse.getY() redirects to VirtualMouse.getY()
 	 * @return Virtual mouse y
 	 */
@@ -44,5 +44,5 @@ public class MixinGameRendererVirtualInputs {
 	public int redirect_render_getY() {
 		return VirtualMouse.getY();
 	}
-	
+
 }

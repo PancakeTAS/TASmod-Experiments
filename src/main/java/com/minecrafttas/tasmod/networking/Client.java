@@ -16,9 +16,9 @@ import com.minecrafttas.tasmod.networking.packets.Packet;
 import net.minecraft.client.MinecraftClient;
 
 /**
- * The TASmod itself has a custom connection running next to the minecraft one. 
+ * The TASmod itself has a custom connection running next to the minecraft one.
  * It's necessary since the integrated packet connection is tick-based and therefore cannot communicate inbetween ticks.
- * 
+ *
  * IMPLEMENTATION NOTICE:
  * The client creates a separate thread to run off so that it's non-blocking. Therefore it uses a queue for outgoing packets.
  * @author Pancake
@@ -29,17 +29,17 @@ public class Client {
 	 * This is the thread that runs the client. It will exit once the client has disconnected.
 	 */
 	private static Thread instance;
-	
+
 	/**
 	 * This is the client socket. Interrupting it will always close the connection and end the thread (instance).
 	 */
 	private static Socket clientSocket;
-	
+
 	/**
 	 * This queue of packets is going to be sent by another thread.
 	 */
 	private static BlockingQueue<Packet> packetsToSend = new LinkedBlockingQueue<>(); // Initialize with something so this cannot cause a npe
-	
+
 	/**
 	 * Adds a packet to the queue of packets to send
 	 * @param packet Packet to send
@@ -51,13 +51,13 @@ public class Client {
 			return;
 		Client.packetsToSend.add(packet);
 	}
-	
+
 	/**
 	 * Once the client enters connect phase a separate client thread is created.
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Called from ClientTASmod.
-	 * 
+	 *
 	 * @throws IOException Fatal Exception, the socket couldn't be closed
 	 * @throws If the last client wasn't succesfully shut down it will throw an exception and forcefully shut down the client
 	 */
@@ -66,7 +66,7 @@ public class Client {
 		// Cancel the currently running server
 		if (isRunning)
 			Client.clientSocket.close();
-		
+
 		// Clear the list of packets to send
 		Client.packetsToSend = new LinkedBlockingQueue<>();
 		// Start a client socket
@@ -89,7 +89,7 @@ public class Client {
 		});
 		Client.instance.setDaemon(true); // If daemon is set, the jvm will quit without waiting for this thread to finish
 		Client.instance.start();
-		
+
 		// Make sure to throw an exception if the server was running
 		if (isRunning)
 			throw new ClientAlreadyRunningException();
@@ -103,5 +103,5 @@ public class Client {
 		if (Client.instance != null)
 			Client.clientSocket.close();
 	}
-	
+
 }

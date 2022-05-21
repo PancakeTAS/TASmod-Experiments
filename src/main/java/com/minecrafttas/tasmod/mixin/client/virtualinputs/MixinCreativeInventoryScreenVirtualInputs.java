@@ -14,9 +14,9 @@ import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
  */
 @Mixin(CreativeInventoryScreen.class)
 public class MixinCreativeInventoryScreenVirtualInputs {
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventDWheel() redirects to VirtualMouse.getEventDWheel()
 	 * @return Virtual event button state
 	 */
@@ -24,9 +24,9 @@ public class MixinCreativeInventoryScreenVirtualInputs {
 	public int redirect_handleMouse_getEventDWheel() {
 		return VirtualMouse.getEventDWheel();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * render() -> Mouse.isButtonDown() redirects to VirtualMouse.isButtonDown()
 	 * @return Virtual mouse buttoncheck
 	 */
@@ -34,5 +34,5 @@ public class MixinCreativeInventoryScreenVirtualInputs {
 	public boolean redirect_render_isButtonDown(int key) {
 		return VirtualMouse.isButtonDown(key);
 	}
-	
+
 }

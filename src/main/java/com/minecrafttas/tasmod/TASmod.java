@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
  * @author Pancake
  */
 public class TASmod {
-	
+
 	/**
 	 * This shall be annotated whereever a piece of code is purely used for the Tool side of TASmod.
 	 * It does not have any effect yet, howeever helps separating between Light and Full version.
@@ -21,10 +21,10 @@ public class TASmod {
 		 * Currently there is no way to update it ingame.
 		 */
 		public static boolean TOOLS = true;
-		
+
 	}
 
-	
+
 	// TASmod Logger for printing debug lines into the console.
 	public static final Logger LOGGER = LogManager.getLogger("TASmod");
 

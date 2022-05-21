@@ -27,7 +27,7 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 
 	// Clientside TASmod singleton
 	public static ClientTASmod instance;
-	
+
 	/**
 	 * Prepares the singleton when the fabric modloader loads the mod
 	 */
@@ -35,10 +35,11 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 		ClientTASmod.instance = this;
 		TASmod.LOGGER.debug("ClientTASmod singleton ready");
 	}
-	
+
 	/**
 	 * Initialize the TASmod clientside.
 	 */
+	@Override
 	public void onInitializeClient() {
 		TASmod.LOGGER.debug("Client TASmod Init Phase");
 		/* Install the client timer mod */
@@ -50,7 +51,7 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 	/**
 	 * Initialize the TASmod when connecting to a world.
 	 * This will launch the custom TASmod client on a separate thread.
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.client.network.ClientLoginNetworkHandler.<init>()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookClientLoginNetworkHandler.hookInitEvent(CallbackInfo)V
@@ -69,33 +70,33 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 			TASmod.LOGGER.fatal("Exception thrown trying to kill the previous custom TASmod client! {}", exception);
 		}
 	}
-	
+
 	/**
 	 * Uninitialize the TASmod when disconnecting from a world.
 	 * This will kill the custom TASmod client on a separate thread.
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.network.ClientConnection.disconnect()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookClientConnection.hookDisconnectEvent(CallbackInfo)V
 	 */
 	public void onClientDisconnect() {
 		TASmod.LOGGER.debug("TASmod Disconnect Server Phase");
-		shutdownClient();
+		this.shutdownClient();
 	}
-	
+
 	/**
 	 * Uninitialize the TASmod when shutting down the Minecraft application.
 	 * This will kill the custom TASmod client on a seperate thread
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.client.MinecraftClient.stop()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraftClient.hookStopEvent(CallbackInfo)V
 	 */
 	public void onClientShutdown() {
 		TASmod.LOGGER.debug("TASmod Shutdown Client Phase");
-		shutdownClient();
+		this.shutdownClient();
 	}
-	
+
 	/**
 	 * Attempts to shutdown the TASmod client
 	 */
@@ -110,14 +111,14 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 			TASmod.LOGGER.error(exception);
 		}
 	}
-	
+
 	/**
 	 * Updates the TASmod at the start of a client tick
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.client.MinecraftClient.tick()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraftClient.hookTickEvent(CallbackInfo)V
-	 * 
+	 *
 	 * @param mc Instance of Minecraft
 	 */
 	public void onClientTick(MinecraftClient mc) {
@@ -127,14 +128,14 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 		VirtualMouse.poll();
 		TASmod.LOGGER.trace("Virtual mouse updated pre tick");
 	}
-	
+
 	/**
 	 * Updates the TASmod at the end of a client tick
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.client.MinecraftClient.tick()V at RETURN
 	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookMinecraftClient.hookTickPostEvent(CallbackInfo)V
-	 * 
+	 *
 	 * @param mc Instance of Minecraft
 	 */
 	public void onClientPostTick(MinecraftClient mc) {
@@ -144,14 +145,14 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 		TickSyncClient.clientPostTick(mc);
 		TASmod.LOGGER.trace("Tick sync was updated post tick");
 	}
-	
+
 	/**
 	 * Renders overlays every frame
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.client.gui.hud.InGameHud.render()V at INVOKE method_12176()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.client.events.HookInGameHud.hookRenderEvent(CallbackInfo)V
-	 * 
+	 *
 	 * @param res Resolution of the screen
 	 */
 	public void onClientRender(Window res) {
@@ -164,5 +165,5 @@ public class ClientTASmod extends CommonTASmod implements ClientModInitializer {
 			TASmod.LOGGER.trace("Keyboard and mouse were rendered");
 		}
 	}
-	
+
 }

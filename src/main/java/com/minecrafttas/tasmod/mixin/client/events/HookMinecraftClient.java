@@ -18,7 +18,7 @@ import net.minecraft.client.MinecraftClient;
 @Mixin(MinecraftClient.class)
 @Environment(EnvType.CLIENT)
 public class HookMinecraftClient {
-	
+
 	/**
 	 * Triggers an Event in {@link ClientTASmod#onClientTick(Minecraft)} before every tick
 	 * @param ci Callback Info
@@ -27,7 +27,7 @@ public class HookMinecraftClient {
 	public void hookTickEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientTick((MinecraftClient) (Object) this);
 	}
-	
+
 	/**
 	 * Triggers an Event in {@link ClientTASmod#onClientPostTick(Minecraft)} after every tick
 	 * @param ci Callback Info
@@ -36,7 +36,7 @@ public class HookMinecraftClient {
 	public void hookTickPostEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientPostTick((MinecraftClient) (Object) this);
 	}
-	
+
 	/**
 	 * Triggers an Event in {@link ClientTASmod#onClientShutdown()} when the minecraft client is shutting down
 	 * @param ci Callback Info
@@ -45,5 +45,5 @@ public class HookMinecraftClient {
 	public void hookStopEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientShutdown();
 	}
-	
+
 }

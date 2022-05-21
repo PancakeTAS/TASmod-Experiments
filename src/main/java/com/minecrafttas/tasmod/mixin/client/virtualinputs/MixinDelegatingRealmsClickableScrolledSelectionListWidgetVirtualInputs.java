@@ -14,9 +14,9 @@ import net.minecraft.client.gui.widget.DelegatingRealmsClickableScrolledSelectio
  */
 @Mixin(DelegatingRealmsClickableScrolledSelectionListWidget.class)
 public class MixinDelegatingRealmsClickableScrolledSelectionListWidgetVirtualInputs {
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventButtonState() redirects to VirtualMouse.getEventButtonState()
 	 * @return Virtual event button state
 	 */

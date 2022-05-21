@@ -18,7 +18,7 @@ import net.minecraft.client.network.ClientLoginNetworkHandler;
 @Mixin(ClientLoginNetworkHandler.class)
 @Environment(EnvType.CLIENT)
 public class HookClientLoginNetworkHandler {
-	
+
 	/**
 	 * Triggers an Event in {@link ClientTASmod#onClientConnect()} after the connection handler has been created
 	 * @param ci Callback Info
@@ -27,5 +27,5 @@ public class HookClientLoginNetworkHandler {
 	public void hookInitEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientConnect();
 	}
-	
+
 }

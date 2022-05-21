@@ -15,5 +15,5 @@ public interface AccessMinecraftClient {
 
 	@Accessor
 	public void setTricker(ClientTickTracker t);
-	
+
 }

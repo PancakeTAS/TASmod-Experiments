@@ -13,7 +13,7 @@ public class PacketSerializer {
 
 	/**
 	 * Deserialize a TASmod packet from a packet buffer. The packet class is prefixed with an id and read here.
-	 * 
+	 *
 	 * @param buf Serialized byte buffer with id prefix
 	 * @return Deserialized packet
 	 */
@@ -38,10 +38,10 @@ public class PacketSerializer {
 		packet.deserialize(buf);
 		return packet;
 	}
-	
+
 	/**
 	 * Serialize a TASmod packet to a packet buffer. The packet class is read and a id prefixed packet buffer is returned
-	 * 
+	 *
 	 * @param packet Non-serialized packet
 	 * @return Serialized packet buffer with id prefix
 	 */
@@ -66,5 +66,5 @@ public class PacketSerializer {
 		packet.serialize(buf);
 		return buf;
 	}
-	
+
 }

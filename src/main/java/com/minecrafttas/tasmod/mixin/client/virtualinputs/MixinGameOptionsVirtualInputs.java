@@ -15,9 +15,9 @@ import net.minecraft.client.options.GameOptions;
  */
 @Mixin(GameOptions.class)
 public class MixinGameOptionsVirtualInputs {
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * isPressed() -> Keyboard.isPressed() redirects to VirtualKeyboard.isPressed()
 	 * @return Virtual key state
 	 */
@@ -25,9 +25,9 @@ public class MixinGameOptionsVirtualInputs {
 	private static boolean redirect_isPressed_isPressed(int code) {
 		return VirtualKeyboard.isKeyDown(code);
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * isPressed() -> Mouse.isButtonDown() redirects to VirtualMouse.isButtonDown()
 	 * @return Virtual button state
 	 */
@@ -35,5 +35,5 @@ public class MixinGameOptionsVirtualInputs {
 	private static boolean redirect_isPressed_isButtonDown(int code) {
 		return VirtualMouse.isButtonDown(code);
 	}
-	
+
 }
