@@ -12,6 +12,7 @@
     	"client.accessor.AccessClientTickTracker",
     	"client.accessor.AccessMinecraftClient",
     	"client.events.HookClientConnection",
+    	"client.events.HookClientLoginNetworkHandler",
 		"client.events.HookInGameHud",
 		"client.events.HookMinecraftClient",
 		"client.virtualinputs.MixinAdvancementsScreenVirtualInputs",

@@ -2,8 +2,8 @@ package com.minecrafttas.tasmod.client.ticks;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.minecrafttas.tasmod.mixin.client.accessor.AccessMinecraftClient;
 import com.minecrafttas.tasmod.mixin.client.accessor.AccessClientTickTracker;
+import com.minecrafttas.tasmod.mixin.client.accessor.AccessMinecraftClient;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.ClientTickTracker;
@@ -38,15 +38,15 @@ public class TimerMod extends ClientTickTracker {
 				this.ticksThisFrame++;
 				this.lastTickLength = newMs - this.millisSinceTick;
 				this.millisSinceTick = newMs;
-				this.lastFrameDuration = 0; // Reset after the tick
+				this.tickDelta = 0; // Reset after the tick
 			}
 			// Interpolating
-			this.tickDelta = (float) (newMs - this.lastMs) / this.lastTickLength;
-			float newPartialTicks = this.lastFrameDuration;
-			newPartialTicks += this.tickDelta;
-			newPartialTicks -= (int) this.lastFrameDuration;
-			if (newPartialTicks > this.lastFrameDuration) {
-				this.lastFrameDuration = newPartialTicks;
+			this.lastFrameDuration = (float) (newMs - this.lastMs) / this.lastTickLength;
+			float newPartialTicks = this.tickDelta;
+			newPartialTicks += this.lastFrameDuration;
+			newPartialTicks -= (int) this.tickDelta;
+			if (newPartialTicks > this.tickDelta) {
+				this.tickDelta = newPartialTicks;
 			}
 			this.lastMs = newMs;
 			return;
@@ -64,3 +64,4 @@ public class TimerMod extends ClientTickTracker {
 		((AccessMinecraftClient) MinecraftClient.getInstance()).setTricker(new TimerMod(20.0f));
 	}
 }
+

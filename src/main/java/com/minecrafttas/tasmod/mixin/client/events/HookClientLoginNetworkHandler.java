@@ -9,23 +9,23 @@ import com.minecrafttas.tasmod.client.ClientTASmod;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.network.ClientConnection;
+import net.minecraft.client.network.ClientLoginNetworkHandler;
 
 /**
  * This mixin is purely responsible for the hooking up the events in {@link ClientTASmod}.
  * @author Pancake
  */
-@Mixin(ClientConnection.class)
+@Mixin(ClientLoginNetworkHandler.class)
 @Environment(EnvType.CLIENT)
-public class HookClientConnection {
+public class HookClientLoginNetworkHandler {
 	
 	/**
-	 * Triggers an Event in {@link ClientTASmod#onClientDisconnect()} after the connection has been closed
+	 * Triggers an Event in {@link ClientTASmod#onClientConnect()} after the connection has been established
 	 * @param ci Callback Info
 	 */
-	@Inject(method = "disconnect", at = @At("HEAD"))
-	public void hookDisconnectEvent(CallbackInfo ci) {
-		ClientTASmod.instance.onClientDisconnect();
+	@Inject(method = "<init>", at = @At("RETURN"))
+	public void hookConnectEvent(CallbackInfo ci) {
+		ClientTASmod.instance.onClientConnect();
 	}
 	
 }
