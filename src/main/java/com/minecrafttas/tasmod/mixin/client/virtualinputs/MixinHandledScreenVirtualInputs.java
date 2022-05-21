@@ -14,9 +14,9 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
  */
 @Mixin(HandledScreen.class)
 public class MixinHandledScreenVirtualInputs {
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * mouseClicked() -> Keyboard.isKeyDown() redirects to VirtualKeyboard.isKeyDown()
 	 * @return Virtual key state
 	 */
@@ -24,9 +24,9 @@ public class MixinHandledScreenVirtualInputs {
 	public boolean redirect_mouseClicked_isKeyDown(int code) {
 		return VirtualKeyboard.isKeyDown(code);
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * mouseReleased() -> Keyboard.isKeyDown() redirects to VirtualKeyboard.isKeyDown()
 	 * @return Virtual key state
 	 */
@@ -34,5 +34,5 @@ public class MixinHandledScreenVirtualInputs {
 	public boolean redirect_mouseReleased_isKeyDown(int code) {
 		return VirtualKeyboard.isKeyDown(code);
 	}
-	
+
 }

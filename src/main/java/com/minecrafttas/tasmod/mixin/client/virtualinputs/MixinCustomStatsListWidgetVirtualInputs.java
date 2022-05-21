@@ -14,7 +14,7 @@ import com.minecrafttas.tasmod.client.virtualinputs.VirtualMouse;
 public class MixinCustomStatsListWidgetVirtualInputs {
 
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * renderHeader() -> Mouse.isButtonDown() redirects to VirtualMouse.isButtonDown()
 	 * @return Virtual mouse buttoncheck
 	 */
@@ -22,5 +22,5 @@ public class MixinCustomStatsListWidgetVirtualInputs {
 	public boolean redirect_renderHeader_isButtonDown(int key) {
 		return VirtualMouse.isButtonDown(key);
 	}
-	
+
 }

@@ -18,7 +18,7 @@ import net.minecraft.network.ClientConnection;
 @Mixin(ClientConnection.class)
 @Environment(EnvType.CLIENT)
 public class HookClientConnection {
-	
+
 	/**
 	 * Triggers an Event in {@link ClientTASmod#onClientDisconnect()} after the connection has been closed
 	 * @param ci Callback Info
@@ -27,5 +27,5 @@ public class HookClientConnection {
 	public void hookDisconnectEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientDisconnect();
 	}
-	
+
 }

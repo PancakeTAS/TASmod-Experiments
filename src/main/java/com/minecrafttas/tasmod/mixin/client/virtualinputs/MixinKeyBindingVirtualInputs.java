@@ -14,9 +14,9 @@ import net.minecraft.client.options.KeyBinding;
  */
 @Mixin(KeyBinding.class)
 public class MixinKeyBindingVirtualInputs {
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * method_12137() -> Keyboard.isKeyDown() redirects to VirtualKeyboard.isKeyDown()
 	 * @return Virtual key state
 	 */
@@ -24,5 +24,5 @@ public class MixinKeyBindingVirtualInputs {
 	private static boolean redirect_method_12137_isKeyDown(int code) {
 		return VirtualKeyboard.isKeyDown(code);
 	}
-	
+
 }

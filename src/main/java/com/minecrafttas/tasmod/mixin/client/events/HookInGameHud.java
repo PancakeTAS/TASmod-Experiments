@@ -22,7 +22,7 @@ import net.minecraft.client.util.Window;
 @Mixin(InGameHud.class)
 @Environment(EnvType.CLIENT)
 public class HookInGameHud {
-	
+
 	/**
 	 * Triggers an Event in {@link ClientTASmod#onClientRender(Window)} after hud has been rendered
 	 * @param ci Callback Info
@@ -31,8 +31,8 @@ public class HookInGameHud {
 	public void hookRenderEvent(CallbackInfo ci) {
 		ClientTASmod.instance.onClientRender(new Window(this.client));
 	}
-	
+
 	@Shadow @Final
 	public MinecraftClient client;
-	
+
 }

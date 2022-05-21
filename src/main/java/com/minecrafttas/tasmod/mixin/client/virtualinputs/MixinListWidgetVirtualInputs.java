@@ -14,9 +14,9 @@ import net.minecraft.client.gui.widget.ListWidget;
  */
 @Mixin(ListWidget.class)
 public class MixinListWidgetVirtualInputs {
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventButton() redirects to VirtualMouse.getEventButton()
 	 * @return Virtual event button
 	 */
@@ -24,9 +24,9 @@ public class MixinListWidgetVirtualInputs {
 	public int redirect_handleMouse_getEventButton() {
 		return VirtualMouse.getEventButton();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventButtonState() redirects to VirtualMouse.getEventButtonState()
 	 * @return Virtual event button state
 	 */
@@ -34,9 +34,9 @@ public class MixinListWidgetVirtualInputs {
 	public boolean redirect_handleMouse_getEventButtonState() {
 		return VirtualMouse.getEventButtonState();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.getEventDWheel() redirects to VirtualMouse.getEventDWheel()
 	 * @return Virtual mouse event mouse wheel
 	 */
@@ -44,9 +44,9 @@ public class MixinListWidgetVirtualInputs {
 	public int redirect_handleMouse_getEventDWheel() {
 		return VirtualMouse.getEventDWheel();
 	}
-	
+
 	/**
-	 * IMPLEMENTATION NOTICE: 
+	 * IMPLEMENTATION NOTICE:
 	 * handleMouse() -> Mouse.isButtonDown() redirects to VirtualMouse.isButtonDown()
 	 * @return Virtual mouse buttoncheck
 	 */
@@ -54,5 +54,5 @@ public class MixinListWidgetVirtualInputs {
 	public boolean redirect_handleMouse_isButtonDown(int key) {
 		return VirtualMouse.isButtonDown(key);
 	}
-	
+
 }

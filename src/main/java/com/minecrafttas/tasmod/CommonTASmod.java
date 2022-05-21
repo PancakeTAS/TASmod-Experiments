@@ -17,7 +17,7 @@ public class CommonTASmod implements ModInitializer {
 
 	// TASmod singleton
 	public static CommonTASmod instance;
-	
+
 	/**
 	 * Prepares the singleton when the fabric modloader loads the mod
 	 */
@@ -25,24 +25,24 @@ public class CommonTASmod implements ModInitializer {
 		CommonTASmod.instance = this;
 		TASmod.LOGGER.debug("CommonTASmod singleton ready");
 	}
-	
+
 	/**
 	 * Initialize the TASmod
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * This is a fabric event called before the game launch method is called
-	 * 
+	 *
 	 * @param e Initialization Event
 	 */
 	@Override
 	public void onInitialize() {
 		TASmod.LOGGER.debug("Common TASmod Init Phase");
 	}
-	
+
 	/**
 	 * Initialize the TASmod on the integrated or dedicated server, that is about to launch.
 	 * This will launch the custom TASmod server on a separate thread.
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.server.MinecraftServer.run()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.events.HookMinecraftServer.hookRunEvent(CallbackInfo)V
@@ -61,11 +61,11 @@ public class CommonTASmod implements ModInitializer {
 			TASmod.LOGGER.fatal("Exception thrown trying to kill the previous custom TASmod server! {}", exception);
 		}
 	}
-	
+
 	/**
 	 * Uninitialize part of the TASmod after the server has stopped.
 	 * This will kill the custom TASmod server.
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.server.MinecraftServer.run()V at return
 	 * Mixin: com.minecrafttas.tasmod.mixin.events.HookMinecraftServer.hookRunEndEvent(CallbackInfo)V
@@ -82,10 +82,10 @@ public class CommonTASmod implements ModInitializer {
 			TASmod.LOGGER.error(exception);
 		}
 	}
-	
+
 	/**
 	 * Updates the TASmod at the start of a tick
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.server.MinecraftServer.run()V at custom net.minecraft.server.MinecraftServer.setupWorld()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.MixinMinecraftServer.customTick()V
@@ -97,7 +97,7 @@ public class CommonTASmod implements ModInitializer {
 
 	/**
 	 * Updates the TASmod at the end of a tick
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Trace: net.minecraft.server.MinecraftServer.run()V after custom net.minecraft.server.MinecraftServer.setupWorld()V
 	 * Mixin: com.minecrafttas.tasmod.mixin.MixinMinecraftServer.customTick()V
@@ -110,5 +110,5 @@ public class CommonTASmod implements ModInitializer {
 		TickSyncServer.serverPostTick();
 		TASmod.LOGGER.trace("Tick sync was updated post tick");
 	}
-	
+
 }

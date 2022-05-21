@@ -16,55 +16,55 @@ import net.minecraft.client.gui.DrawableHelper;
 public class VirtualMouse {
 
 	/**
-	 * This is the mouse button replica. 
+	 * This is the mouse button replica.
 	 */
 	private static boolean[] buttonStates = new boolean[512];
-	
+
 	/**
 	 * This is the button code of the button in the current event
 	 */
 	private static int eventButton;
-	
+
 	/**
 	 * This is the button state of the button in the current event
 	 */
 	private static boolean eventButtonState;
-	
+
 	/**
 	 * This is the mouse wheel progress
 	 */
 	private static int eventDWheel;
-	
+
 	/**
 	 * This is the x coordinate of the mouse
 	 */
 	private static int x;
-	
+
 	/**
 	 * This is the y coordinate of the mouse
 	 */
 	private static int y;
-	
+
 	/**
 	 * This is the delta x coordinate of the mouse updating every tick
 	 */
 	private static int dx;
-	
+
 	/**
 	 * This is the delta y coordinate of the mouse updating every tick
 	 */
 	private static int dy;
-	
+
 	/**
 	 * This is the delta x coordinate that is being reset after catched once and actually returned in getDX
 	 */
 	private static int rdx;
-	
+
 	/**
 	 * This is the delta y coordinate that is being reset after catched once and actually returned in getDY
 	 */
 	private static int rdy;
-	
+
 	/**
 	 * This method updates getDX and getDY and is being called on tick
 	 */
@@ -72,7 +72,7 @@ public class VirtualMouse {
 		VirtualMouse.dx = VirtualMouse.rdx = Mouse.getDX();
 		VirtualMouse.dy = VirtualMouse.rdy = Mouse.getDY();
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's next() with additional input sources.
 	 * It fetches inputs from the mouse and loads the next event packet, so that getEventXXX returns data of that specific packet.
@@ -81,7 +81,7 @@ public class VirtualMouse {
 	public static boolean next() {
 		TASmod.LOGGER.trace("Processing next mouse event...");
 		boolean hasNext;
-		
+
 		/* Input Source 1: The actual mouse */
 		hasNext = Mouse.next(); // Fetch the actual mouse for future events
 		// If the actual mouse has any events, fetch them.
@@ -93,21 +93,21 @@ public class VirtualMouse {
 			VirtualMouse.y = Mouse.getY();
 		}
 		/* Input Source 2 (example): The playback file. Add custom input packet sources here into an else block and update hasNext for future input sources. */
-		
+
 		TASmod.LOGGER.trace("Processed next mouse event");
 		if (hasNext) VirtualMouse.buttonStates[VirtualMouse.eventButton+256] = VirtualMouse.eventButtonState; // Update the keyboard replica
 		return hasNext;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getEventButton()
-	 * This method returns the event button of the current packet 
+	 * This method returns the event button of the current packet
 	 * @return Event button code
 	 */
 	public static int getEventButton() {
 		return VirtualMouse.eventButton;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getEventButtonState()
 	 * This method returns the event button state of the current packet
@@ -116,7 +116,7 @@ public class VirtualMouse {
 	public static boolean getEventButtonState() {
 		return VirtualMouse.eventButtonState;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getEventKeyState()
 	 * This method returns the event key state of the current packet
@@ -125,17 +125,17 @@ public class VirtualMouse {
 	public static int getEventDWheel() {
 		return VirtualMouse.eventDWheel;
 	}
-	
+
 	/**
 	 * This method is a custom reimplementation of LWJGL's isButtonDown. Instead of checking the actual mouse, this will check the virtual mouse replica.
 	 * @param buttoncode Button Code
-	 * 
+	 *
 	 * @return Whether given Button Code is pressed or not
 	 */
 	public static boolean isButtonDown(int buttoncode) {
 		return VirtualMouse.buttonStates[buttoncode+256];
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getEventX()
 	 * This method returns the current x position of the virtual mouse
@@ -144,7 +144,7 @@ public class VirtualMouse {
 	public static int getEventX() {
 		return VirtualMouse.x;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getEventY()
 	 * This method returns the current y position of the virtual mouse
@@ -153,7 +153,7 @@ public class VirtualMouse {
 	public static int getEventY() {
 		return VirtualMouse.y;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getX()
 	 * Custom implemented, does the same as getEventX()
@@ -162,7 +162,7 @@ public class VirtualMouse {
 	public static int getX() {
 		return VirtualMouse.x;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getY()
 	 * @return Y pos
@@ -170,7 +170,7 @@ public class VirtualMouse {
 	public static int getY() {
 		return VirtualMouse.y;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getDX()
 	 * It returns the delta position of the mouse x coordinate
@@ -181,7 +181,7 @@ public class VirtualMouse {
 		VirtualMouse.rdx = 0;
 		return ret;
 	}
-	
+
 	/**
 	 * This method is a reimplementation of LWJGL's getDY()
 	 * It returns the delta position of the mouse y coordinate
@@ -192,10 +192,10 @@ public class VirtualMouse {
 		VirtualMouse.rdy = 0;
 		return ret;
 	}
-	
+
 	/**
 	 * Renders the current keyStates to the screen
-	 * 
+	 *
 	 * @param width Width of the screen (scaled)
 	 * @param height Height of the screen (scaled)
 	 */
@@ -205,13 +205,13 @@ public class VirtualMouse {
 		VirtualMouse.renderButtonBox(330, 50, 20, 20, 0);
 		VirtualMouse.renderButtonBox(355, 50, 20, 20, 2);
 		VirtualMouse.renderButtonBox(380, 50, 20, 20, 1);
-		
+
 		// Mouse wheel up and down
 		DrawableHelper.fill(355, 25, 355+20+2, 25+20+2, VirtualMouse.getEventDWheel() > 0 ? 0x80FFFFFF : 0x40000000);
 		MinecraftClient.getInstance().textRenderer.draw("^", 1+355+20/2-MinecraftClient.getInstance().textRenderer.getStringWidth("^")/2, 1+25+20/2-MinecraftClient.getInstance().textRenderer.fontHeight/2, VirtualMouse.getEventDWheel() > 0 ? 0 : 0xFFFFFF);
 		DrawableHelper.fill(355, 75, 355+20+2, 75+20+2, VirtualMouse.getEventDWheel() < 0 ? 0x80FFFFFF : 0x40000000);
 		MinecraftClient.getInstance().textRenderer.draw("v", 1+355+20/2-MinecraftClient.getInstance().textRenderer.getStringWidth("v")/2, 1+75+20/2-MinecraftClient.getInstance().textRenderer.fontHeight/2, VirtualMouse.getEventDWheel() < 0 ? 0 : 0xFFFFFF);
-	
+
 		// Mouse delta position
 		DrawableHelper.fill(410, 35, 410+50, 35+50, 0x40000000);
 		Vector2f vec = new Vector2f(VirtualMouse.dx, VirtualMouse.dy);
@@ -222,10 +222,10 @@ public class VirtualMouse {
 		DrawableHelper.fill(410+x, 35+y, 410+x+2, 35+y+2, 0x80FFFFFF);
 		MinecraftClient.getInstance().textRenderer.draw(VirtualMouse.dx + " " + VirtualMouse.dy, 410, 25, 0xFFFFFF);
 	}
-	
+
 	/**
 	 * Renders a button box with a custom size to the screen.
-	 * 
+	 *
 	 * @param x X position of the box
 	 * @param y Y position of the box
 	 * @param width Width of the box
@@ -249,5 +249,5 @@ public class VirtualMouse {
 		}
 		MinecraftClient.getInstance().textRenderer.draw(bchar, 1+x+width/2-MinecraftClient.getInstance().textRenderer.getStringWidth(bchar)/2, 1+y+height/2-MinecraftClient.getInstance().textRenderer.fontHeight/2, (!VirtualMouse.buttonStates[buttoncode+256] ? Mouse.isButtonDown(buttoncode) ? 0x00AA00 : 0xFFFFFF : 0x000000));
 	}
-	
+
 }

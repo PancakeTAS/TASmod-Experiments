@@ -14,5 +14,5 @@ public interface AccessClientTickTracker {
 
 	@Accessor(value = "field_1042")
 	public void setLastSyncSysClock(long i);
-	
+
 }

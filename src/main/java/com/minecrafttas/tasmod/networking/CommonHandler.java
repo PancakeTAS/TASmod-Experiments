@@ -66,9 +66,9 @@ public class CommonHandler {
 			PacketByteBuf packetBuf = new PacketByteBuf(Unpooled.wrappedBuffer(packetData));
 			// Deserialize and run the packet
 			packet = PacketSerializer.deserialize(packetBuf);
-			packet.handle(); 
+			packet.handle();
 			TASmod.LOGGER.trace("Handled a " + packet.getClass().getSimpleName() + " from the socket.");
 		}
 	}
-	
+
 }

@@ -15,9 +15,9 @@ import com.minecrafttas.tasmod.networking.packets.Packet;
 import com.minecrafttas.tasmod.ticks.TickSyncServer;
 
 /**
- * The TASmod itself has a custom connection running next to the minecraft one. 
+ * The TASmod itself has a custom connection running next to the minecraft one.
  * It's necessary since the integrated packet connection is tick-based and therefore cannot communicate inbetween ticks.
- * 
+ *
  * IMPLEMENTATION NOTICE:
  * The server creates a separate thread to run off so that it's non-blocking. Therefore it uses a queue for outgoing packets.
  * @author Pancake
@@ -29,22 +29,22 @@ public class Server {
 	 * Interrupting it will always close the connection and end the thread.
 	 */
 	private static Thread instance;
-	
+
 	/**
 	 * Count of clients connected to the server
 	 */
 	private static int connections;
-	
+
 	/**
 	 * This is the server socket. Interrupting it will always close the connection and end the thread (instance).
 	 */
 	private static ServerSocket serverSocket;
-	
+
 	/**
 	 * This queue of packets is going to be sent by another thread.
 	 */
 	private static LinkedBlockingQueue<BlockingQueue<Packet>> packetsToSend = new LinkedBlockingQueue<>(); // Initialize with something so this cannot cause a npe
-	
+
 	/**
 	 * Adds a packet to the queue of packets to send to all clients
 	 * @param packet Packet to send
@@ -56,13 +56,13 @@ public class Server {
 			return;
 		Server.packetsToSend.forEach(queue -> queue.add(packet));
 	}
-	
+
 	/**
 	 * Once the server enters launch phase a separate server thread is created.
-	 * 
+	 *
 	 * IMPLEMENTATION NOTICE:
 	 * Called from CommonTASmod.
-	 * 
+	 *
 	 * @throws IOException Fatal Exception, the socket couldn't be closed
 	 * @throws If the last server wasn't succesfully shut down it will throw an exception and forcefully shut down the server
 	 */
@@ -71,7 +71,7 @@ public class Server {
 		// Cancel the currently running server
 		if (isRunning)
 			Server.serverSocket.close();
-		
+
 		// Clear the amount of connections
 		Server.connections = 0;
 		// Clear the list of packets to send
@@ -111,12 +111,12 @@ public class Server {
 		});
 		Server.instance.setDaemon(true); // If daemon is set, the jvm will quit without waiting for this thread to finish
 		Server.instance.start();
-		
+
 		// Make sure to throw an exception if the server was running
 		if (isRunning)
 			throw new ServerAlreadyRunningException();
 	}
-	
+
 	/**
 	 * Kills the custom TASmod server if is running
 	 * @throws IOException Thrown if the socket couldn't be closed
@@ -134,5 +134,5 @@ public class Server {
 	public static int getConnectionCount() {
 		return Server.connections;
 	}
-	
+
 }
