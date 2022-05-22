@@ -1,8 +1,11 @@
 package com.minecrafttas.tasmod.ticks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.networking.Server;
 import com.minecrafttas.tasmod.networking.packets.ClientTickPacket;
 
@@ -20,18 +23,22 @@ public class TickSyncServer {
 	 */
 	public static AtomicBoolean shouldTick = new AtomicBoolean(true);
 
+	private static List<UUID> tickedClients = new ArrayList<>();
+	
 	/**
 	 * Handles incoming tick packets from the client to the server
 	 * This will put the uuid into a list of ticked clients and once every client
 	 * is in that list, tick the server.
 	 *
 	 * @param uuid Player UUID
-	 * @param tick Current tick of the player
 	 */
 	public static void onPacket(UUID uuid) {
-		shouldTick.set(true);
-
-		// TODO: Wait for all clients not just any
+		// Check if a packet was received from every player
+		tickedClients.add(uuid);
+		if (tickedClients.size() >= Server.getConnectionCount()) {
+			tickedClients.clear();
+			shouldTick.set(true);
+		}
 	}
 
 	/**
