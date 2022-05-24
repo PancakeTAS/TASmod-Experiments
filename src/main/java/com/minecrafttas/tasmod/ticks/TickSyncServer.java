@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.minecrafttas.tasmod.TASmod;
 import com.minecrafttas.tasmod.networking.Server;
 import com.minecrafttas.tasmod.networking.packets.ClientTickPacket;
 
