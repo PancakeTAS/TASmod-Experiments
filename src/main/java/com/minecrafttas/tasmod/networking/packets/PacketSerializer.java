@@ -23,12 +23,9 @@ public class PacketSerializer {
 		Packet packet = null;
 		switch (packetId) {
 			case 0:
-				packet = new ExamplePacket();
-				break;
-			case 1:
 				packet = new ClientTickPacket();
 				break;
-			case 2:
+			case 1:
 				packet = new ServerTickPacket(null);
 				break;
 			default:
@@ -50,14 +47,11 @@ public class PacketSerializer {
 		String clazz = packet.getClass().getSimpleName();
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		switch (clazz) {
-			case "ExampleTASmodPacket":
+			case "ClientTickPacket":
 				buf.writeInt(0);
 				break;
-			case "ClientTickPacket":
-				buf.writeInt(1);
-				break;
 			case "ServerTickPacket":
-				buf.writeInt(2);
+				buf.writeInt(1);
 				break;
 			default:
 				TASmod.LOGGER.warn("Unregistered packet was trying to be serialized! Packet Class: " + clazz);
