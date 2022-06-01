@@ -3,6 +3,7 @@ package com.minecrafttas.tasmod.networking;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InterruptedIOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.concurrent.BlockingQueue;
@@ -76,7 +77,11 @@ public class Client {
 			if (serverIp.contains(":"))
 				serverIp = serverIp.split(Pattern.quote(":"))[0];
 			// Connect to the server
-			try(Socket clientSocket = new Socket(serverIp, 3111)) {
+			try(Socket clientSocket = new Socket()) {
+				// Wait until client is safely loaded
+				Thread.sleep(500);
+				// Connect to the server
+				clientSocket.connect(new InetSocketAddress(serverIp, 3111));
 				Client.clientSocket = clientSocket;
 				// Handle the socket
 				CommonHandler.handleSocket(clientSocket, Client.packetsToSend); // this will create a new thread for outstream and use the current thread for instream
